@@ -17,12 +17,16 @@ mongoose.connect('mongodb://localhost/web-meta-data', (err) => {
   console.log(err || 'Connected to mongodb!')
 })
 
+
 //establish a path to public folder: no route needed because we just need one file
 app.use(express.static(__dirname + '/public'))
+
 
 //middleware
 app.use(logger('dev'))
 app.use(bodyParser.json())
+
+
 
 //server
 app.listen(PORT, (err) => {
