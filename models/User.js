@@ -2,7 +2,7 @@
 const
   mongoose = require('mongoose'), //to store and grab from the database
   bcrypt = require('bcrypt-nodejs'),//password encryption/hashing
-  userSchema = new mongoose.Schema({ 
+  userSchema = new mongoose.Schema({
     local: { //local to our application
       name: String,
       email: String,
