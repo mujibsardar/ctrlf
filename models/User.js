@@ -1,8 +1,9 @@
+//User model
 const
-  mongoose = require('mongoose'),
-  bcrypt = require('bcrypt-nodejs'),
-  userSchema = new mongoose.Schema({
-    local: {
+  mongoose = require('mongoose'), //to store and grab from the database
+  bcrypt = require('bcrypt-nodejs'),//password encryption/hashing
+  userSchema = new mongoose.Schema({ 
+    local: { //local to our application
       name: String,
       email: String,
       password: String

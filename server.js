@@ -13,8 +13,9 @@ const
   cookieParser = require('cookie-parser'), //translates session data and make it accessible in our app
   session = require('express-session'), //creates session cookies for authenticated users
   MongoDBStore = require('connect-mongodb-session')(session), //session storage on mongoDB
-  passport = require('passport') //middleware for authentication
-
+  passport = require('passport'), //middleware for authentication
+  passportConfig = require('./config/passport.js'),
+  userRoutes = require('./routes/users.js') //users routes
 
 //environment port
 const
@@ -43,8 +44,31 @@ app.use(flash())
 app.set('view engine', 'ejs')
 app.use(ejsLayouts)
 
+//session + passport
+app.use(session({ //issue cookies and send it to the clients
+	secret: "teamctrlf",
+	cookie: {maxAge: 60000000}, //login time: expiration of cookie
+	resave: true, //every request comes in, create a new cookie: reset the expiration
+	saveUninitialized: false, //do you want to create a cookie that's not logged in? no
+	store: store//where do you want to store the cookie
+}))
+
+//passport middleware
+app.use(passport.initialize()) //all of the settings with the Stategy, apply to each request
+app.use(passport.session()) //hey passport, generate a cookie whenever a user logs in
+
+//custom middleware to view current user
+app.use((req, res, next) => {
+	app.locals.currentUser = req.user //locals: list of all the variables available in all the views
+	app.locals.isLoggedIn = !!req.user
+	next()
+})
+
 //establish a path to public folder: no route needed because we just need one file
 app.use(express.static(__dirname + '/public'))
+
+//add user routes file
+app.use('/', userRoutes)
 
 //server
 app.listen(port, (err) => {
