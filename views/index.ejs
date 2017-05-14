@@ -5,3 +5,54 @@
     <a href="/signup" class="btn btn-default">Local Signup</a>
     <hr>
 </div>
+
+<div class="search form">
+  <form class="user search" action="index.html" method="post">
+    <input type="text" name="" value="" placeholder="Search text..."  id="search_text"><br /><br />
+    <center>
+      <button type="button" name="button" id="search">Search</button>
+    </center>
+  </form>
+</div>
+
+<div class="search results" id="search_results">
+  <ul>
+
+  </ul>
+</div>
+
+<script>
+  var $searchText = $('#search_text')
+  var $searchBtn = $('#search')
+  var $searchResults = $('#search_results')
+
+  $searchBtn.on('click', function(){
+    console.log("Search Button Clicked");
+    var filterText = $searchText.val()
+
+    var requestSettings = {
+      method: 'post',
+      url: '/search/',
+      data: JSON.stringify({text: filterText}),
+      contentType:'application/json'
+      }
+
+    $.ajax(requestSettings).done(function(s) {
+      console.log("ajax callback entered...");
+      displayResults(s)
+
+    })
+  })
+
+  function displayResults(s){
+    s.webpages.forEach((result) => {
+      $searchResults.append(`<li>
+                                <a href="${result.uri}">${result.name}</a><br>
+                                            ${result.snippet}<br>
+                                <a href="${result.uri}"> ${result.uri}</a><br>
+                            </li>`)
+    })
+  }
+
+
+</script>

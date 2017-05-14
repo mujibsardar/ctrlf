@@ -7,8 +7,7 @@ const
   ejsLayouts = require('express-ejs-layouts'), //template layout handler
   bodyParser = require('body-parser'), //json message translation to usable data
   dotenv = require('dotenv').load({silent: true}), //key protection
-  // Import Bing API package
-  Bing = require('node-bing-api')({ accKey:  process.env.BING_SEARCH_ACCESS_TOKEN}),
+  Bing = require('node-bing-api')({ accKey:  process.env.BING_SEARCH_ACCESS_TOKEN}), // Import Bing API package
   flash = require('connect-flash'), //send msgs to a view depending on login/logout
   cookieParser = require('cookie-parser'), //translates session data and make it accessible in our app
   session = require('express-session'), //creates session cookies for authenticated users
@@ -67,24 +66,41 @@ app.use((req, res, next) => {
 //establish a path to public folder: no route needed because we just need one file
 app.use(express.static(__dirname + '/public'))
 
+
+//root route
+app.get('/', (req,res) => {
+  console.log("Root Route");
+	res.render('index')
+})
+
+//search query route. All searches will route through here
+app.post('/search', function(req,res){
+  var body = req.body
+  var searchText = body.text
+  var searchResults = {}
+
+  if(searchText){
+    Bing.web(searchText, {
+      top: 10
+    }, function(error, response, body){
+        if (error) console.log(error)
+          var webpageArray = []
+          for(var i = 0; i < 10; i++){
+            webpageArray.push({name: body.webPages.value[i].name,
+                              snippet: body.webPages.value[i].snippet,
+                              uri: body.webPages.value[i].displayUrl})
+          }
+          searchResults = {webpages: webpageArray}
+          res.json(searchResults)
+    })
+  }
+
+})
+
 //add user routes file
 app.use('/', userRoutes)
 
 //server
 app.listen(port, (err) => {
   console.log(err || "Server running on", port)
-})
-
-// Bing search API call, specifying to return only 10 pages
-// Display Name, Snippet and URL of the first result
-// Search for the phrase "ctrlF Search"
-Bing.web("ctrlF Search", {
-  top: 10
-}, function(error, res, body){
-  console.log("Callback from search entered...")
-  if (error) console.log(error)
-  // bodyOfResults = body
-  console.log("Name of Page: ", body.webPages.value[0].name);
-  console.log("Snippet: ", body.webPages.value[0].snippet);
-  console.log("URL: ", body.webPages.value[0].displayUrl);
 })
