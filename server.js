@@ -15,8 +15,9 @@ const
   MongoDBStore = require('connect-mongodb-session')(session), //session storage on mongoDB
   passport = require('passport'), //middleware for authentication
   passportConfig = require('./config/passport.js'),
-  userRoutes = require('./routes/users.js') //users routes
-
+  userRoutes = require('./routes/users.js'), //users routes
+  webpagesModel = require('./models/Webpage.js') // webpage model
+  
 //environment port
 const
   port = process.env.PORT || 3000,
