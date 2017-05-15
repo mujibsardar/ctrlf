@@ -79,21 +79,43 @@ app.post('/search', function(req,res){
   var searchText = body.text
   var searchResults = {}
 
-  if(searchText){
+  if(searchText && searchText != ""){
     Bing.web(searchText, {
       top: 10
     }, function(error, response, body){
         if (error) console.log(error)
+        // console.log(body);
           var webpageArray = []
           for(var i = 0; i < 10; i++){
-            webpageArray.push({name: body.webPages.value[i].name,
+            if(body.webPages.value[i]){
+              webpageArray.push({name: body.webPages.value[i].name,
                               snippet: body.webPages.value[i].snippet,
-                              uri: body.webPages.value[i].displayUrl})
+                              uri: body.webPages.value[i].url,
+                              displayUrl: body.webPages.value[i].displayUrl})
+              }
           }
           searchResults = {webpages: webpageArray}
           res.json(searchResults)
     })
   }
+  // else if(location.hash){
+  //   var searchHash = location.hash
+  //   searchHash.replace( /^#/, "" )
+  //
+  //   Bing.web(searchHash, {
+  //     top: 10
+  //   }, function(error, response, body){
+  //       if (error) console.log(error)
+  //         var webpageArray = []
+  //         for(var i = 0; i < 10; i++){
+  //           webpageArray.push({name: body.webPages.value[i].name,
+  //                             snippet: body.webPages.value[i].snippet,
+  //                             uri: body.webPages.value[i].displayUrl})
+  //         }
+  //         searchResults = {webpages: webpageArray}
+  //         res.json(searchResults)
+  //   })
+  // }
 
 })
 
