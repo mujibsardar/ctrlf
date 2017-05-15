@@ -36,15 +36,15 @@
   var $commentBody = $('comment-body')
 
 
-
-
   var requestSettings = {
     method: "GET",
     url: "/show/:id"
   }
   $.ajax(requestSettings).done(function (comments) {
     comments.forEach(function (comment) {
-      
+      var theLi = $('<li>').attr('id', "singleComment")
+      theLi.text = (comment.body)
+      $displayComments.append(theLi)
     })
   })
 
