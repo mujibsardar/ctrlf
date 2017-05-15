@@ -8,12 +8,10 @@
 </div>
 
 <div class="search form">
-  <form class="user search" action="index.html" method="post">
     <input type="text" name="" value="" placeholder="Search text..."  id="search_text"><br /><br />
     <center>
       <button type="button" name="button" id="search">Search</button>
     </center>
-  </form>
 </div>
 
 <div class="search results" id="search_results">
@@ -23,14 +21,23 @@
 </div>
 
 <script>
+  // Global variables used throughout the code
   var $searchText = $('#search_text')
   var $searchBtn = $('#search')
   var $searchResults = $('#search_results')
+  var myVar
 
+  // This checks if used pressed enter on the keyboard. If so it "click" on the search button
+  $searchText.keyup(function(event){
+      if(event.keyCode == 13){
+          $searchBtn.click()
+      }
+  })
+
+  // Add click event listener to search button
   $searchBtn.on('click', function(){
-    console.log("Search Button Clicked");
+    startRetrievingResultsAnimation()
     var filterText = $searchText.val()
-
     var requestSettings = {
       method: 'post',
       url: '/search/',
@@ -38,22 +45,44 @@
       contentType:'application/json'
       }
 
-    $.ajax(requestSettings).done(function(s) {
-      console.log("ajax callback entered...");
-      displayResults(s)
+    $.ajax(requestSettings).done(function(rawResults) {
+      stopTimer()
+      displayResults(rawResults)
 
     })
   })
 
-  function displayResults(s){
-    s.webpages.forEach((result) => {
+  // Helper function to append returned results to the searchResults div
+  function displayResults(rawResults){
+    $searchResults.html("")
+    rawResults.webpages.forEach((result) => {
       $searchResults.append(`<li>
                                 <a href="${result.uri}">${result.name}</a><br>
                                             ${result.snippet}<br>
-                                <a href="${result.uri}"> ${result.uri}</a><br>
+                                <a href="${result.uri}"> ${result.displayUrl}</a><br>
                             </li>`)
     })
   }
 
+  // Check if there is some text in the text box when this page is reached
+  // This is to allow previous search results to be retrieved and displayed again after user comes back to the apge
+  if($searchText.val() && $searchText.val() != "" ){
+    $searchBtn.click()
+  }
+
+  // The next three functions are to display a message while results are being fetched
+  var counter = 0
+  function startRetrievingResultsAnimation(){
+    myVar = setInterval(function(){ myTimer() }, 1000)
+  }
+
+  function myTimer() {
+    counter++
+    $searchResults.html("<br /><br><center><h2>Searching." + new Array(counter % 10).join('.') + "</h2></center>")
+    }
+
+  function stopTimer() {
+      clearInterval(myVar)
+  }
 
 </script>
