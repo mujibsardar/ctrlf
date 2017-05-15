@@ -1,5 +1,7 @@
 <div class="col-sm-6 col-sm-offset-3">
-    <h1>Login</h1>
+    <div class="text-center">
+      <h1>Login</h1>
+    </div>
 
     <% if(message.length) { %>
       <div class="alert alert-danger">
@@ -16,13 +18,14 @@
             <label>Password</label>
             <input type="password" class="form-control" name="password">
         </div>
-
-        <button type="submit" class="btn btn-info btn-lg">Login</button>
+        <div class="text-center">
+          <button type="submit" class="btn btn-default">Login</button>
+      </div>
     </form>
 
     <hr>
 
-    <p>Or, <a href="/signup">Signup</a></p>
+    <p><a href="/signup">Sign up</a></p>
     <p>Go back <a href="/">home</a>.</p>
 
 </div>

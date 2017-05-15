@@ -1,7 +1,9 @@
 <div class="text-center col-md-8 col-md-offset-2">
     <h1><span class="fa fa-lock"></span>Ctrl+F</h1>
+    <% if (!isLoggedIn) { %>
     <a href="/login" class="btn btn-default">Login</a>
     <a href="/signup" class="btn btn-default">Signup</a>
+    <% } %>
     <hr>
 </div>
 
