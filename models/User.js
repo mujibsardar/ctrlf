@@ -2,12 +2,17 @@
 const
   mongoose = require('mongoose'), //to store and grab from the database
   bcrypt = require('bcrypt-nodejs'),//password encryption/hashing
+  commentSchema = new mongoose.Schema({   // Establish structure of embedded comments
+      user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}, // reference to a user as a foreign key
+      name: String
+  }) //because users comment on webpages
   userSchema = new mongoose.Schema({
     local: { //local to our application
       name: String,
       email: String,
       password: String
-    }
+    },
+   comments: [commentSchema]
   })
 
 //generate the password digest
