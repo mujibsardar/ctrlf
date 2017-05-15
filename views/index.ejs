@@ -20,22 +20,21 @@
 </div>
 
 <script>
+  // Global variables used throughout the code
   var $searchText = $('#search_text')
   var $searchBtn = $('#search')
   var $searchResults = $('#search_results')
   var myVar
 
-
+  // This checks if used pressed enter on the keyboard. If so it "click" on the search button
   $searchText.keyup(function(event){
-    console.log("key pressed")
       if(event.keyCode == 13){
-        console.log("enter pressed")
           $searchBtn.click()
       }
   })
 
+  // Add click event listener to search button
   $searchBtn.on('click', function(){
-    console.log("Search Button Clicked")
     startRetrievingResultsAnimation()
     var filterText = $searchText.val()
     var requestSettings = {
@@ -46,17 +45,15 @@
       }
 
     $.ajax(requestSettings).done(function(rawResults) {
-      console.log("ajax callback entered...");
-      // location.hash = filterText;
       stopTimer()
       displayResults(rawResults)
 
     })
   })
 
+  // Helper function to append returned results to the searchResults div
   function displayResults(rawResults){
     $searchResults.html("")
-    console.log("rawResults: ", rawResults);
     rawResults.webpages.forEach((result) => {
       $searchResults.append(`<li>
                                 <a href="${result.uri}">${result.name}</a><br>
@@ -66,19 +63,19 @@
     })
   }
 
+  // Check if there is some text in the text box when this page is reached
+  // This is to allow previous search results to be retrieved and displayed again after user comes back to the apge
   if($searchText.val() && $searchText.val() != "" ){
-    console.log("Value in search box recognized")
     $searchBtn.click()
-
   }
 
+  // The next three functions are to display a message while results are being fetched
   var counter = 0
   function startRetrievingResultsAnimation(){
     myVar = setInterval(function(){ myTimer() }, 1000)
   }
 
   function myTimer() {
-    // $searchResults.html()
     counter++
     $searchResults.html("<br /><br><center><h2>Searching." + new Array(counter % 10).join('.') + "</h2></center>")
     }

@@ -69,7 +69,6 @@ app.use(express.static(__dirname + '/public'))
 
 //root route
 app.get('/', (req,res) => {
-  console.log("Root Route");
 	res.render('index')
 })
 
@@ -84,7 +83,6 @@ app.post('/search', function(req,res){
       top: 10
     }, function(error, response, body){
         if (error) console.log(error)
-        // console.log(body);
           var webpageArray = []
           for(var i = 0; i < 10; i++){
             if(body.webPages.value[i]){
@@ -98,25 +96,6 @@ app.post('/search', function(req,res){
           res.json(searchResults)
     })
   }
-  // else if(location.hash){
-  //   var searchHash = location.hash
-  //   searchHash.replace( /^#/, "" )
-  //
-  //   Bing.web(searchHash, {
-  //     top: 10
-  //   }, function(error, response, body){
-  //       if (error) console.log(error)
-  //         var webpageArray = []
-  //         for(var i = 0; i < 10; i++){
-  //           webpageArray.push({name: body.webPages.value[i].name,
-  //                             snippet: body.webPages.value[i].snippet,
-  //                             uri: body.webPages.value[i].displayUrl})
-  //         }
-  //         searchResults = {webpages: webpageArray}
-  //         res.json(searchResults)
-  //   })
-  // }
-
 })
 
 //add user routes file
