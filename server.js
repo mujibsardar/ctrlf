@@ -89,7 +89,8 @@ app.post('/search', function(req,res){
               webpageArray.push({name: body.webPages.value[i].name,
                               snippet: body.webPages.value[i].snippet,
                               uri: body.webPages.value[i].url,
-                              displayUrl: body.webPages.value[i].displayUrl})
+                              displayUrl: body.webPages.value[i].displayUrl,
+                              fullObj: body})
               }
           }
           searchResults = {webpages: webpageArray}

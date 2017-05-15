@@ -57,11 +57,17 @@
   function displayResults(rawResults){
     $searchResults.html("")
     rawResults.webpages.forEach((result) => {
-      $searchResults.append(`<li>
-                                <span class="search_result" id="${result.uri}">${result.name}</span><br>
+    var result_uri = result.uri
+    $searchResults.append(`<li>
+                                <span class="search_result" id="${result.displayUrl}">${result.name}</span><br>
                                             ${result.snippet}<br>
-                                <span class="search_result" id="${result.uri}">${result.displayUrl}</span><br>
+                                <span class="search_result" id="${result.displayUrl}">${result.displayUrl}</span><br>
                             </li>`)
+
+   $(".search_result").on("click", function(){
+      console.log("You clicked on search result " + this.id);
+      
+      })
     })
   }
 
