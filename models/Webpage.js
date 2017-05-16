@@ -8,7 +8,6 @@ const
   // Model of webpage data
   webpageSchema = mongoose.Schema({
     url: String
-    // comments: [commentSchema]
   })
 
 module.exports = mongoose.model('Webpage', webpageSchema)
