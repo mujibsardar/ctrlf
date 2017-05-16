@@ -105,14 +105,9 @@ app.post('/search', function(req,res){
 })
 
 function extractDestinationUrl(bingUrl){
-  // console.log("Extract...");
-// var regex = new Regex()
 var re = new RegExp('&r=(.*)&');
-// var r  = '&r=https://vine.co/v/Mipm1LMKVqJ/embed&f'.match(re);
 var encodedUrlArray  = bingUrl.match(re);
 var finalUrl = decode(encodedUrlArray[1])
-// console.log("Regex Decoding...");
-// console.log(finalUrl);
 return finalUrl
 }
 
