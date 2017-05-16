@@ -56,20 +56,33 @@
   // Helper function to append returned results to the searchResults div
   function displayResults(rawResults){
     $searchResults.html("")
+    var count = 0
     rawResults.webpages.forEach((result) => {
     var result_uri = result.uri
     $searchResults.append(`<li>
-                                <span class="search_result" id="${result.displayUrl}">${result.name}</span><br>
+                                <span class="search_result" id='${++count}' url="${result.displayUrl}">${result.name}</span><br>
                                             ${result.snippet}<br>
-                                <span class="search_result" id="${result.displayUrl}">${result.displayUrl}</span><br>
+                                <span class="search_result" id='${count}' url="${result.displayUrl}">${result.displayUrl}</span><br>
                             </li>`)
+  // console.log(`#${count}`);
+  // console.log($(".search_result"))
+   $('#' + count).on("click", function(){
+      console.log("You clicked on search result " + $(this).attr("url"));
+      var requestSettings = {
+        method: 'post',
+        url: '/webpages/createOrFind/',
+        data: JSON.stringify({url: $(this).attr("url")}),
+        contentType:'application/json'
+        }
 
-   $(".search_result").on("click", function(){
-      console.log("You clicked on search result " + this.id);
-      
+      $.ajax(requestSettings).done(function(idOrNull) {
+          // console.log("ajax: ");
+          console.log(idOrNull);
       })
     })
-  }
+
+
+  })}
 
 
 
