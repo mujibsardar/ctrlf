@@ -83,10 +83,10 @@ app.post('/search', function(req,res){
       top: 10
     }, function(error, response, body){
         if (error) console.log(error)
-          console.log(body);
           var webpageArray = []
           for(var i = 0; i < 10; i++){
             if(body.webPages.value[i]){
+              console.log(body.webPages.value[i].url);
               webpageArray.push({name: body.webPages.value[i].name,
                               snippet: body.webPages.value[i].snippet,
                               uri: body.webPages.value[i].url,

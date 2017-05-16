@@ -64,10 +64,7 @@
                                             ${result.snippet}<br>
                                 <span class="search_result" id='${count}' url="${result.displayUrl}">${result.displayUrl}</span><br>
                             </li>`)
-  // console.log(`#${count}`);
-  // console.log($(".search_result"))
    $('#' + count).on("click", function(){
-      console.log("You clicked on search result " + $(this).attr("url"));
       var requestSettings = {
         method: 'post',
         url: '/webpages/createOrFind/',
@@ -75,9 +72,12 @@
         contentType:'application/json'
         }
 
-      $.ajax(requestSettings).done(function(idOrNull) {
+      $.ajax(requestSettings).done(function(pageID) {
           // console.log("ajax: ");
-          console.log(idOrNull);
+          console.log("Return from span click ");
+          console.log(pageID);
+          location.href = `webpages/${pageID}`
+
       })
     })
 

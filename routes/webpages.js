@@ -6,17 +6,14 @@ const
   webpagesController = require('../controllers/webpages.js') //require webpages controller file
 
 
-  webpageRouter.route('/')
-    .get(webpagesController.index)
-    .post(webpagesController.create)
+webpageRouter.route('/')
+  .get(webpagesController.index)
+  .post(webpagesController.create)
 
-webpageRouter.route('/show/')
+webpageRouter.route('/:id')
   .get(webpagesController.show)
 
-webpageRouter.route('/show/:id')
-  .get(webpagesController.show)
-
-  webpageRouter.route('/createOrFind')
+webpageRouter.route('/createOrFind')
   .post(webpagesController.createOrFind)
 
 module.exports = webpageRouter
