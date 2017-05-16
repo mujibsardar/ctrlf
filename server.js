@@ -83,6 +83,7 @@ app.post('/search', function(req,res){
       top: 10
     }, function(error, response, body){
         if (error) console.log(error)
+          console.log(body);
           var webpageArray = []
           for(var i = 0; i < 10; i++){
             if(body.webPages.value[i]){
@@ -100,7 +101,8 @@ app.post('/search', function(req,res){
 })
 
 //add user routes file
-app.use('/', userRoutes)
+app.use('/users/', userRoutes)
+app.use('/webpages/', webpageRoutes)
 
 //server
 app.listen(port, (err) => {
