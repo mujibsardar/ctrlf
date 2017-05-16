@@ -1,3 +1,6 @@
+
+<h1><%= webpage._id %></h1>
+
 <div class="container">
 
   <!-- load external page internally -->
@@ -5,64 +8,22 @@
    </object>
 
 
-
    <div class="appDisplay">
 
-     <h1>Ctrl+F</h1>
+        <h1>Ctrl+F</h1>
 
-     <div class="row">
-       <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-6">
 
-         <h3>Comments:</h3>
-         <ul id="display-comments">
-           <% webpage.comments.forEach((c) => {%>
-              <li><%= c.name %></li>
-           <% }) %>
-         </ul>
-
-       </div>
-       <div class="col-md-6">
-
-         <% if(isLoggedIn) { %>
-            <!-- show add comment form -->
-            <div class="comment-form">
-                <input type="text" id="comment-body"><br/>
-                <button type="button" id="comment-submit">Submit</button>
-            </div>
-
-         <% } %>
-
-       </div>
-     </div>
+            <h3>Comments:</h3>
 
 
+          </div>
+          <div class="col-md-6">
 
-   </div>
+          
+
+          </div> 
 
 </div>
 
-<script type="text/javascript">
-
-  var $displayComments = $('display-comments')
-  var $commentBody = $('comment-body')
-  var $commentSubmit = $('comment-submit')
-
-  $commentSubmit.on('click', function () {
-
-
-
-        var requestSettings = {
-          method: "POST",
-          url: /* url to post a comment */ ,
-          data: JSON.stringify({body: $commentBody.val()}),
-          contentType: "application/json"
-        }
-
-        $.ajax(requestSettings).done(function (c) {
-
-        })
-
-
-  })
-
-</script>
