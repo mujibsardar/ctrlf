@@ -55,8 +55,6 @@ create: (req, res) => {
       }
     })
 
-
-
     res.json("Returned data ")
    }
 }
