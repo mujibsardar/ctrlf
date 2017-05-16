@@ -37,9 +37,6 @@ create: (req, res) => {
   //find crtlF-webpage object or return null
   //findOrReturnNull
    createOrFind: (req, res) => {
-    // console.log("url: ")
-    // console.log(req.body.url)
-    // Webpage.findOne({ 'url': req.url }
     // We need to check if the URL is valid
     Webpage.find( {url:req.body.url} , function(errs, webpage){
       if(errs) console.log(errs);
