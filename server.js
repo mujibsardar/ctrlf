@@ -16,6 +16,7 @@ const
   passportConfig = require('./config/passport.js'),
   userRoutes = require('./routes/users.js'), //users routes
   webpageRoutes = require('./routes/webpages.js'), //webpages routes
+  commentRoutes = require('./routes/comments.js'),
   decode = require('urldecode'), //used to decode regex
   Regex = require('regex')
 
@@ -120,7 +121,7 @@ return finalUrl
 //add routes file
 app.use('/', userRoutes)
 app.use('/webpages', webpageRoutes)
-
+app.use('/comments', commentRoutes)
 
 //server
 app.listen(port, (err) => {

@@ -1,7 +1,8 @@
 //Webpage controllers
 const
   Webpage = require('../models/Webpage.js'), //require the Webpage model to be able to create functions on the database
-  User = require("../models/User.js")
+  User = require("../models/User.js"),
+  CtrlfComment = require("../models/Comment.js")
 
 module.exports = {
   index: (req, res) => {
@@ -11,15 +12,8 @@ module.exports = {
     })
   },
   commentsIndex: (req, res) => {
-    Webpage.findById(req.params.id, (err, webpage) => {
-      var allUsers = User.find({}, (err, users) => {
-        console.log("List of all user:");
-        console.log(users);
-      })
-      // User.comments.find({webpage: req.params.id}, (err, comments) => {
-
-      // })
-      // res.json(webpage.comments)
+    CtrlfComment.find({webpage:req.params.id}, (err,comments) => {
+      res.json(comments)
     })
   },
   show: (req, res) => {
@@ -28,28 +22,18 @@ module.exports = {
       if(err) return console.log(err);
       res.render("show", {webpage})
     })
-
-    req.params.id
-
-    // 5919e4c91b84371ba381a5b3
-
-    // res.redirect("/")
-    //you can show a sepcific webpage (if it exists in the database) by doing Webpage.findById()
-    //in the webpage router (not here)you can do something down this line:
-  //
-},
-create: (req, res) => {
-  Webpage.create(req.body, (err, newlyPage) => {
-  if(err) return console.log(err)
-  console.log("New Page Created ", newlyPage);
-  res.redirect('/webpages/')
-})
-},
-
+  },
+  create: (req, res) => {
+    Webpage.create(req.body, (err, newlyPage) => {
+    if(err) return console.log(err)
+    console.log("New Page Created ", newlyPage);
+    res.redirect('/webpages/')
+    })
+  },
   //customized functions here
   //find crtlF-webpage object or return null
   //findOrReturnNull
-   createOrFind: (req, res) => {
+  createOrFind: (req, res) => {
     // We need to check if the URL is valid
     Webpage.find( {url:req.body.url} , function(errs, webpage){
       if(errs) console.log(errs);
@@ -63,5 +47,12 @@ create: (req, res) => {
       }
       res.json(newPageID)
     })
-   }
+  },
+  createComments: (req, res) => {
+    var newComment = new CtrlfComment(req.body)
+    newComment.webpage = req.params.id
+    newComment.save((err) => {
+      res.json({success: true, message: "new comment created!", comment: newComment})
+    })
+  }
 }
