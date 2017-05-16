@@ -10,6 +10,12 @@ module.exports = {
     })
   },
   show: (req, res) => {
+    var id = req.params.id
+    Webpage.findById(id, (err, webpage) => {
+      if(err) return console.log(err);
+      res.render("show", {webpage})
+    })
+
     req.params.id
 
     //
