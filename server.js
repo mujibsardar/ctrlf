@@ -100,7 +100,7 @@ app.post('/search', function(req,res){
   }
 })
 
-//add user routes file
+//add routes file
 app.use('/users/', userRoutes)
 app.use('/webpages/', webpageRoutes)
 
