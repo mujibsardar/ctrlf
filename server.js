@@ -104,6 +104,7 @@ app.post('/search', function(req,res){
   }
 })
 
+
 function extractDestinationUrl(bingUrl){
   // console.log("Extract...");
 // var regex = new Regex()
@@ -116,9 +117,10 @@ var finalUrl = decode(encodedUrlArray[1])
 return finalUrl
 }
 
-//add user routes file
-app.use('/users/', userRoutes)
-app.use('/webpages/', webpageRoutes)
+//add routes file
+app.use('/', userRoutes)
+app.use('/webpages', webpageRoutes)
+
 
 //server
 app.listen(port, (err) => {
