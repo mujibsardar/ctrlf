@@ -47,6 +47,22 @@
   var $commentBody = $('comment-body')
   var $commentSubmit = $('comment-submit')
 
-  
+  $commentSubmit.on('click', function () {
+
+
+
+        var requestSettings = {
+          method: "POST",
+          url: /* url to post a comment */ ,
+          data: JSON.stringify({body: $commentBody.val()}),
+          contentType: "application/json"
+        }
+
+        $.ajax(requestSettings).done(function (c) {
+
+        })
+
+
+  })
 
 </script>
