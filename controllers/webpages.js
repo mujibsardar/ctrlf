@@ -1,12 +1,25 @@
 //Webpage controllers
 const
-  Webpage = require('../models/Webpage.js') //require the Webpage model to be able to create functions on the database
+  Webpage = require('../models/Webpage.js'), //require the Webpage model to be able to create functions on the database
+  User = require("../models/User.js")
 
 module.exports = {
   index: (req, res) => {
     Webpage.find({},(err, webpages) => {
       if (err) {console.log(err)}
       res.json(webpages)
+    })
+  },
+  commentsIndex: (req, res) => {
+    Webpage.findById(req.params.id, (err, webpage) => {
+      var allUsers = User.find({}, (err, users) => {
+        console.log("List of all user:");
+        console.log(users);
+      })
+      // User.comments.find({webpage: req.params.id}, (err, comments) => {
+
+      // })
+      // res.json(webpage.comments)
     })
   },
   show: (req, res) => {
@@ -18,7 +31,7 @@ module.exports = {
 
     req.params.id
 
-    //
+    // 5919e4c91b84371ba381a5b3
 
     // res.redirect("/")
     //you can show a sepcific webpage (if it exists in the database) by doing Webpage.findById()

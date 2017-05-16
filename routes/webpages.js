@@ -13,6 +13,9 @@ webpageRouter.route('/')
 webpageRouter.route('/:id')
   .get(webpagesController.show)
 
+webpageRouter.route('/:id/comments')
+  .get(webpagesController.commentsIndex)
+
 webpageRouter.route('/createOrFind')
   .post(webpagesController.createOrFind)
 
