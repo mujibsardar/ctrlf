@@ -47,4 +47,6 @@ function isLoggedIn(req, res, next) {
   }
 }
 
+
+
 module.exports = userRouter //export to require in our server.js
