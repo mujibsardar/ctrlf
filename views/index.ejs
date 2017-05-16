@@ -60,9 +60,9 @@
     rawResults.webpages.forEach((result) => {
     var result_uri = result.uri
     $searchResults.append(`<li>
-                                <span class="search_result" id='${++count}' url="${result.displayUrl}">${result.name}</span><br>
+                                <span class="search_result" id='${++count}' url="${result.uri}">${result.name}</span><br>
                                             ${result.snippet}<br>
-                                <span class="search_result" id='${count}' url="${result.displayUrl}">${result.displayUrl}</span><br>
+                                <span class="search_result" id='${count}' url="${result.uri}">${result.displayUrl}</span><br>
                             </li>`)
    $('#' + count).on("click", function(){
       var requestSettings = {
@@ -73,9 +73,6 @@
         }
 
       $.ajax(requestSettings).done(function(pageID) {
-          // console.log("ajax: ");
-          console.log("Return from span click ");
-          console.log(pageID);
           location.href = `webpages/${pageID}`
 
       })

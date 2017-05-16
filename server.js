@@ -15,7 +15,10 @@ const
   passport = require('passport'), //middleware for authentication
   passportConfig = require('./config/passport.js'),
   userRoutes = require('./routes/users.js'), //users routes
-  webpageRoutes = require('./routes/webpages.js') //webpages routes
+  webpageRoutes = require('./routes/webpages.js'), //webpages routes
+  decode = require('urldecode'), //used to decode regex
+  Regex = require('regex')
+
 //environment port
 const
   port = process.env.PORT || 3000,
@@ -84,12 +87,13 @@ app.post('/search', function(req,res){
     }, function(error, response, body){
         if (error) console.log(error)
           var webpageArray = []
+          var webUrlExtractedFromBing = ""
           for(var i = 0; i < 10; i++){
             if(body.webPages.value[i]){
-              console.log(body.webPages.value[i].url);
+              webUrlExtractedFromBing = extractDestinationUrl(body.webPages.value[i].url)
               webpageArray.push({name: body.webPages.value[i].name,
                               snippet: body.webPages.value[i].snippet,
-                              uri: body.webPages.value[i].url,
+                              uri: webUrlExtractedFromBing,
                               displayUrl: body.webPages.value[i].displayUrl,
                               fullObj: body})
               }
@@ -99,6 +103,18 @@ app.post('/search', function(req,res){
     })
   }
 })
+
+function extractDestinationUrl(bingUrl){
+  // console.log("Extract...");
+// var regex = new Regex()
+var re = new RegExp('&r=(.*)&');
+// var r  = '&r=https://vine.co/v/Mipm1LMKVqJ/embed&f'.match(re);
+var encodedUrlArray  = bingUrl.match(re);
+var finalUrl = decode(encodedUrlArray[1])
+// console.log("Regex Decoding...");
+// console.log(finalUrl);
+return finalUrl
+}
 
 //add user routes file
 app.use('/users/', userRoutes)
