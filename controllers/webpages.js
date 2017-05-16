@@ -19,9 +19,13 @@ module.exports = {
   show: (req, res) => {
     var id = req.params.id
     Webpage.findById(id, (err, webpage) => {
-      if(err) return console.log(err);
-      res.render("show", {webpage})
+      CtrlfComment.find({webpage: id}, (err,comments) => {
+        if(err) return console.log(err);
+        console.log(comments)
+        res.render("show", {webpage, comments})
+      } )
     })
+
   },
   create: (req, res) => {
     Webpage.create(req.body, (err, newlyPage) => {
