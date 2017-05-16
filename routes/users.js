@@ -2,7 +2,8 @@
 const
   express = require('express'), //for express method chains
   passport = require('passport'), //authentication
-  userRouter = express.Router() //create a user router
+  userRouter = express.Router(), //create a user router
+  usersController = require('../controllers/users.js')
 
 //login path
 userRouter.route('/login')
@@ -47,6 +48,14 @@ function isLoggedIn(req, res, next) {
   }
 }
 
+userRouter.route('/users')
+  .get(usersController.index)
+
+userRouter.route('/users/:id')
+  .get(usersController.show)
+
+userRouter.route('/users/:id/comments')
+  .post(usersController.createComment)
 
 
 module.exports = userRouter //export to require in our server.js

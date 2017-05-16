@@ -1,6 +1,7 @@
 //Comment model
 const
   express = require('express'),
+  mongoose = require('mongoose'),
   commentSchema = mongoose.Schema({
     user: { // reference to a user as a foreign key
       type: mongoose.Schema.Types.ObjectId,
@@ -13,4 +14,4 @@ const
     body: String
   })
 
-module.exports = mongoose.model('Comment', commetnSchema)
+module.exports = mongoose.model('Comment', commentSchema)
