@@ -19,11 +19,8 @@ const
   commentRoutes = require('./routes/comments.js'),
   decode = require('urldecode'), //used to decode regex
   Regex = require('regex'),
-  mongoUrl = process.env.MONGO_URL 
-
-//environment port
-const
-  port = process.env.PORT || 3000
+  mongoUrl = process.env.MONGO_URL,
+  port = process.env.PORT || 3000 //environment port
 
 //connect to mongodb
 mongoose.connect(mongoUrl, (err) => {
