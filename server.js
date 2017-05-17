@@ -89,13 +89,16 @@ app.post('/search', function(req,res){
         if (error) console.log(error)
           var webpageArray = []
           var webUrlExtractedFromBing = ""
+          var numberOfComments = 0
           for(var i = 0; i < 10; i++){
             if(body.webPages.value[i]){
               webUrlExtractedFromBing = extractDestinationUrl(body.webPages.value[i].url)
+              numberOfComments = getNumberOfComments(webUrlExtractedFromBing)
               webpageArray.push({name: body.webPages.value[i].name,
                               snippet: body.webPages.value[i].snippet,
                               uri: webUrlExtractedFromBing,
                               displayUrl: body.webPages.value[i].displayUrl,
+                              numberOfComments,
                               fullObj: body})
               }
           }
@@ -107,12 +110,15 @@ app.post('/search', function(req,res){
 
 
 function extractDestinationUrl(bingUrl){
-var re = new RegExp('&r=(.*)&');
-var encodedUrlArray  = bingUrl.match(re);
-var finalUrl = decode(encodedUrlArray[1])
-return finalUrl
+  var re = new RegExp('&r=(.*)&');
+  var encodedUrlArray  = bingUrl.match(re);
+  var finalUrl = decode(encodedUrlArray[1])
+  return finalUrl
 }
 
+function getNumberOfComments(url){
+  return 22
+}
 //add routes file
 app.use('/', userRoutes)
 app.use('/webpages', webpageRoutes)
