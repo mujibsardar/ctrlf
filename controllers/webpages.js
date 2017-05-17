@@ -21,7 +21,7 @@ module.exports = {
     Webpage.findById(id, (err, webpage) => {
       CtrlfComment.find({webpage: id}, (err,comments) => {
         if(err) return console.log(err);
-        console.log(comments)
+        // console.log(comments)
         res.render("show", {webpage, comments})
       } )
     })

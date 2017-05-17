@@ -33,37 +33,28 @@
               <a href="/logout-here" class="btn btn-clear">Logout</a>
                <div>
                   <h3>Add Comment:</h3>
-                   <input type="text" id="comment-body"><br/>
+                   <input type="text" id="comment-body" /><br/>
                    <button type="button" pageId="<%= webpage._id %>" id="comment-submit">Submit</button>
                </div>
 
             <% } else { %>
 
+                <form action="/login-here" method="post">
 
-
-                  <div class=“form-group”>
+                  <div class="form-group">
                       <label>Email</label>
-                      <input id="email-here" type=“text” class=“form-control” name=“email”>
+                      <input type="text" class="form-control" name="email" />
                   </div>
-                  <div class=“form-group”>
+                  <div class="form-group">
                       <label>Password</label>
-                      <input id="password-here" type=“password” class=“form-control” name=“password”>
+                      <input type="password" class="form-control" name="password" />
                   </div>
-                  <div class=“text-center”>
-                    <a id="login-here" class=“btn btn-default” pageId="<%= webpage._id %>">Login</a>
-                </div>
-
-
-             <hr>
-
-             <p><a href=“/signup”>Sign up</a></p>
-              <p>Go back <a href=“/”>home</a>.</p>
-
+                  <div class="text-center">
+                    <button type="submit" class="btn btn-default">Login</button>
+                  </div>
+              </form>
 
             <% } %>
-
-
-
 
           </div>
 
@@ -74,22 +65,8 @@
   var $displayComments = $('#display-comments')
   var $commentBody = $('#comment-body')
   var $commentSubmit = $('#comment-submit')
-  var $loginHere = $('#login-here')
-  var $emailHere = $('#email-here')
-  var $passwordHere = $('#password-here')
 
-  $loginHere.on('click', function() {
-    var pageId = $(this).attr('pageId')
-    var requestSettings = {
-      method: "POST",
-      url: '/login-here',
-      data: JSON.stringify({id: $emailHere.val(), password: $passwordHere.val()}),
-      contentType: "application.json"
-    }
-    $.ajax(requestSettings).done(function(u) {
-      window.location.replace('/webpages/' + pageId)
-    })
-  })
+
   $commentSubmit.on('click', function () {
     var pageId = $(this).attr('pageId');
     console.log("submit button clicked!");
