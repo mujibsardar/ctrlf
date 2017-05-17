@@ -58,8 +58,10 @@
     // console.log(typeof rawResults.webpages);
     // $("#comment" + 4).html("Hi")
     // console.log(rawResults.webpages.length);
-    counter =
+
     rawResults.webpages.forEach((result) => {
+    // console.log("URI: ", result.uri)
+    // console.log("Counter: ", counter)
     var requestSettings = {
       method: 'post',
       url: '/webpages/findComments',
@@ -67,11 +69,20 @@
       contentType:'application/json'
       }
 
-    $.ajax(requestSettings).done(function(commentsLength) {
-      console.log("callback...!!$$%%");
-      console.log("commentsLength: " , commentsLength)
-         $("#comment" + 4).html("Comment()")
-      })
+      // console.log("URL before ajax call is: ", result.uri);
+      closureFunction(result.uri)
+
+    function closureFunction(uri){
+      var url = uri
+      counter = 0
+      $.ajax(requestSettings).done(function(commentsLength) {
+        counter++
+        console.log("Url: ", url);
+        console.log("Comment length is: ", commentsLength);
+        $("#comment" + result.index).html("Comments (" + commentsLength + ") ")
+        })
+    }
+
 
         // location.href = `webpages/${pageID}`
       }) // Closes for loop
@@ -85,13 +96,13 @@
     rawResults.webpages.forEach((result) => {
     var result_uri = result.uri
     $searchResults.append(`<li class="search_result_li">
-                                <span class="search_result_name" id='${++count}' url="${result.uri}" style="cursor:pointer">${result.name}</span><br>
+                                <span class="search_result_name" id='${count}' url="${result.uri}" style="cursor:pointer">${result.name}</span><br>
                                             ${result.snippet}<br>
                                 <span class="search_result_url" id='${count}' url="${result.uri}" style="cursor:pointer">${result.displayUrl}</span>
 
                                 <span class="comments" id='comment${count}'> </span><br>
                             </li>`)
-
+   count++
    $('#' + count).on("click", function(){
       var requestSettings = {
         method: 'post',
@@ -105,11 +116,8 @@
 
       })
     })
-
-
   }
 )}
-
 
 
   // Check if there is some text in the text box when this page is reached

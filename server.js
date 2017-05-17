@@ -102,6 +102,7 @@ app.post('/search', function(req,res){
                               snippet: body.webPages.value[i].snippet,
                               uri: webUrlExtractedFromBing,
                               displayUrl: body.webPages.value[i].displayUrl,
+                              index: i,
                               fullObj: body})
               }
           }
