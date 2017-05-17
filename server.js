@@ -18,7 +18,9 @@ const
   webpageRoutes = require('./routes/webpages.js'), //webpages routes
   commentRoutes = require('./routes/comments.js'),
   decode = require('urldecode'), //used to decode regex
-  Regex = require('regex')
+  Regex = require('regex'),
+  Webpage = require('./models/Webpage.js'), //now that we have the controller file separated, this doesn't need to be required.
+  CtrlfComment = require('./models/Comment.js')
 
 //environment port
 const
@@ -118,22 +120,26 @@ function extractDestinationUrl(bingUrl){
 
 function getNumberOfComments(url){
   var newPageID
-  Webpage.find( {url:url} , function(errs, webpage){
+  // var numberOfComments = 0
+  Webpage.find( {url:url} , findPage)
+  }
+
+  function findPage (errs, webpage){
     if(errs) console.log(errs);
     if (webpage.length > 0) {
       newPageID = webpage[0]._id
+      CtrlfComment.find({webpage:newPageID}, findComments)
     } else {
       // No website found matching the url given
-      })
+      }
     }
-  })
 
-    CtrlfComment.find({webpage:req.params.id}, (err,comments) => {
+    function findComments(err,comments) {
+      if(err) console.log(err)
+      console.log("Number of comments!!!!", comments.length)
+      numberOfComments = comments.length
+    }
 
-    })
-  }
-  console.log(webpagesController.commentsIndex)
-}
 //add routes file
 app.use('/', userRoutes)
 app.use('/webpages', webpageRoutes)
