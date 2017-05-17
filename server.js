@@ -117,6 +117,21 @@ function extractDestinationUrl(bingUrl){
 }
 
 function getNumberOfComments(url){
+  var newPageID
+  Webpage.find( {url:url} , function(errs, webpage){
+    if(errs) console.log(errs);
+    if (webpage.length > 0) {
+      newPageID = webpage[0]._id
+    } else {
+      // No website found matching the url given
+      })
+    }
+  })
+
+    CtrlfComment.find({webpage:req.params.id}, (err,comments) => {
+
+    })
+  }
   console.log(webpagesController.commentsIndex)
 }
 //add routes file
