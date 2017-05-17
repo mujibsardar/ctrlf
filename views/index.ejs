@@ -60,7 +60,7 @@
     rawResults.webpages.forEach((result) => {
     var result_uri = result.uri
     $searchResults.append(`<li>
-                                <span class="search_result" id='${++count}' url="${result.uri}">${result.name}</span><br>
+                                <span class="search_result" id='${++count}' url="${result.uri}" style="cursor:pointer">${result.name}</span><br>
                                             ${result.snippet}<br>
                                 <span class="search_result" id='${count}' url="${result.uri}">${result.displayUrl}</span>
                                 Comments (${result.numberOfComments}) <br>
