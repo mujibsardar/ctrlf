@@ -117,7 +117,6 @@ function extractDestinationUrl(bingUrl){
 }
 
 function getNumberOfComments(url){
-  console.log(webpagesController.commentsIndex)
 }
 //add routes file
 app.use('/', userRoutes)
