@@ -24,6 +24,16 @@
   background-color: rgba(255, 255, 255, 0.75);
 }
 
+
 #display-comments {
   text-align: left;
+  
+.search_result {
+  font-weight: 400;
+  color: #000099;
+}
+
+.search_result:hover {
+  text-decoration: underline;
+
 }
