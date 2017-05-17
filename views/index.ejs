@@ -62,7 +62,8 @@
     $searchResults.append(`<li class="search_result_li">
                                 <span class="search_result_name" id='${++count}' url="${result.uri}" style="cursor:pointer">${result.name}</span><br>
                                             ${result.snippet}<br>
-                                <span class="search_result_url" id='${count}' url="${result.uri}">${result.displayUrl}</span>
+                                <span class="search_result_url" id='${count}' url="${result.uri}" style="cursor:pointer">${result.displayUrl}</span>
+
                                 Comments (${result.numberOfComments}) <br>
                             </li>`)
    $('#' + count).on("click", function(){

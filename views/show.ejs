@@ -26,10 +26,11 @@
             </ul>
           </div>
 
-          <div class="col-md-6">
+
+            <div class="col-md-6">
 
             <% if(isLoggedIn) { %>
-
+              <a href="/logout-here" class="btn btn-clear">Logout</a>
                <div>
                   <h3>Add Comment:</h3>
                    <input type="text" id="comment-body"><br/>
@@ -39,19 +40,19 @@
             <% } else { %>
 
 
-              <form action=“/login” method=“post”>
+
                   <div class=“form-group”>
                       <label>Email</label>
-                      <input type=“text” class=“form-control” name=“email”>
+                      <input id="email-here" type=“text” class=“form-control” name=“email”>
                   </div>
                   <div class=“form-group”>
                       <label>Password</label>
-                      <input type=“password” class=“form-control” name=“password”>
+                      <input id="password-here" type=“password” class=“form-control” name=“password”>
                   </div>
                   <div class=“text-center”>
-                    <button type=“submit” class=“btn btn-default”>Login</button>
+                    <a id="login-here" class=“btn btn-default” pageId="<%= webpage._id %>">Login</a>
                 </div>
-              </form>
+
 
              <hr>
 
@@ -73,7 +74,22 @@
   var $displayComments = $('#display-comments')
   var $commentBody = $('#comment-body')
   var $commentSubmit = $('#comment-submit')
+  var $loginHere = $('#login-here')
+  var $emailHere = $('#email-here')
+  var $passwordHere = $('#password-here')
 
+  $loginHere.on('click', function() {
+    var pageId = $(this).attr('pageId')
+    var requestSettings = {
+      method: "POST",
+      url: '/login-here',
+      data: JSON.stringify({id: $emailHere.val(), password: $passwordHere.val()}),
+      contentType: "application.json"
+    }
+    $.ajax(requestSettings).done(function(u) {
+      window.location.replace('/webpages/' + pageId)
+    })
+  })
   $commentSubmit.on('click', function () {
     var pageId = $(this).attr('pageId');
     console.log("submit button clicked!");

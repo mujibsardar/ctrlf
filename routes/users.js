@@ -15,6 +15,9 @@ userRouter.route('/login')
     failureRedirect: '/login'
   }))
 
+userRouter.route('/login-here')
+  .post(passport.authenticate('local-login'))
+
 //signup path
 userRouter.route('/signup')
   .get((req, res) => { //show the signup form
@@ -36,6 +39,11 @@ userRouter.get('/profile', isLoggedIn, (req, res) => { //when somebody tries to 
 userRouter.get('/logout', isLoggedIn, (req, res) => {
   req.logout()// session to nil in rails
   res.redirect('/')
+})
+
+userRouter.get('/logout-here', isLoggedIn, (req, res) => {
+  req.logout()
+  res.redirect(req.headers.referer) //might cause an error later
 })
 
 //middleware, like "before action" in RoR
