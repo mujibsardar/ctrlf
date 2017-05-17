@@ -19,6 +19,7 @@ const
   commentRoutes = require('./routes/comments.js'),
   decode = require('urldecode'), //used to decode regex
   Regex = require('regex'),
+  methodOverride = require('method-override'),
   mongoUrl = process.env.MONGO_URL,
   port = process.env.PORT || 3000 //environment port
 
@@ -39,6 +40,7 @@ app.use(cookieParser())
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
 app.use(flash())
+app.use(methodOverride('_method'))
 
 //ejs config
 app.set('view engine', 'ejs')
