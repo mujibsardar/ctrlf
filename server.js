@@ -18,21 +18,21 @@ const
   webpageRoutes = require('./routes/webpages.js'), //webpages routes
   commentRoutes = require('./routes/comments.js'),
   decode = require('urldecode'), //used to decode regex
-  Regex = require('regex')
+  Regex = require('regex'),
+  mongoUrl = process.env.MONGO_URL 
 
 //environment port
 const
-  port = process.env.PORT || 3000,
-  mongoConnectionString = process.env.MONGODB_URL || 'mongodb://localhost/web-meta-data'
+  port = process.env.PORT || 3000
 
 //connect to mongodb
-mongoose.connect(mongoConnectionString, (err) => {
-  console.log(err || 'Connected to MongoDB:', mongoConnectionString)
+mongoose.connect(mongoUrl, (err) => {
+  console.log(err || 'Connected to MongoDB:', mongoUrl)
 })
 
 //store session info as a 'sessions' collecion in mongo
 const store = new MongoDBStore({
-  uri: mongoConnectionString,
+  uri: mongoUrl,
   collection: 'sessions'
 })
 
