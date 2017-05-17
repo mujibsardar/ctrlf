@@ -19,6 +19,8 @@ const
   commentRoutes = require('./routes/comments.js'),
   decode = require('urldecode'), //used to decode regex
   Regex = require('regex'),
+  Webpage = require('./models/Webpage.js'), //now that we have the controller file separated, this doesn't need to be required.
+  CtrlfComment = require('./models/Comment.js'),
   methodOverride = require('method-override'),
   mongoUrl = process.env.MONGO_URL,
   port = process.env.PORT || 3000 //environment port
@@ -84,7 +86,7 @@ app.post('/search', function(req,res){
   if(searchText && searchText != ""){
     Bing.web(searchText, {
       top: 10
-    }, function(error, response, body){
+    }, function bingResultCallback(error, response, body){
         if (error) console.log(error)
           var webpageArray = []
           var webUrlExtractedFromBing = ""
@@ -92,12 +94,14 @@ app.post('/search', function(req,res){
           for(var i = 0; i < 10; i++){
             if(body.webPages.value[i]){
               webUrlExtractedFromBing = extractDestinationUrl(body.webPages.value[i].url)
-              numberOfComments = getNumberOfComments(webUrlExtractedFromBing)
+
+              // numberOfComments = getNumberOfComments(webUrlExtractedFromBing)
+
               webpageArray.push({name: body.webPages.value[i].name,
                               snippet: body.webPages.value[i].snippet,
                               uri: webUrlExtractedFromBing,
                               displayUrl: body.webPages.value[i].displayUrl,
-                              numberOfComments,
+                              index: i,
                               fullObj: body})
               }
           }
@@ -114,6 +118,28 @@ function extractDestinationUrl(bingUrl){
   var finalUrl = decode(encodedUrlArray[1])
   return finalUrl
 }
+
+function getNumberOfComments(url, res){
+  var newPageID
+  // var numberOfComments = 0
+  Webpage.find( {url:url} , findPage)
+  }
+
+  function findPage (errs, webpage){
+    if(errs) console.log(errs);
+    if (webpage.length > 0) {
+      newPageID = webpage[0]._id
+      CtrlfComment.find({webpage:newPageID}, findComments)
+    } else {
+      // No website found matching the url given
+      }
+    }
+
+    function findComments(err,comments) {
+      if(err) console.log(err)
+      console.log("Number of comments: ", comments.length)
+      numberOfComments = comments.length
+    }
 
 function getNumberOfComments(url){
 
