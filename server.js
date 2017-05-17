@@ -24,17 +24,17 @@ const
 
 //environment port
 const
-  port = process.env.PORT || 3000,
-  mongoConnectionString = process.env.MONGODB_URL || 'mongodb://localhost/web-meta-data'
+  mongoUrl = process.env.MONGO_URL,
+  port = process.env.PORT || 3000 //environment port
 
 //connect to mongodb
-mongoose.connect(mongoConnectionString, (err) => {
-  console.log(err || 'Connected to MongoDB:', mongoConnectionString)
+mongoose.connect(mongoUrl, (err) => {
+  console.log(err || 'Connected to MongoDB:', mongoUrl)
 })
 
 //store session info as a 'sessions' collecion in mongo
 const store = new MongoDBStore({
-  uri: mongoConnectionString,
+  uri: mongoUrl,
   collection: 'sessions'
 })
 
@@ -96,26 +96,21 @@ app.post('/search', function(req,res){
             if(body.webPages.value[i]){
               webUrlExtractedFromBing = extractDestinationUrl(body.webPages.value[i].url)
 
-              numberOfComments = getNumberOfComments(webUrlExtractedFromBing)
+              // numberOfComments = getNumberOfComments(webUrlExtractedFromBing)
 
               webpageArray.push({name: body.webPages.value[i].name,
                               snippet: body.webPages.value[i].snippet,
                               uri: webUrlExtractedFromBing,
                               displayUrl: body.webPages.value[i].displayUrl,
-                              numberOfComments,
                               fullObj: body})
               }
           }
           searchResults = {webpages: webpageArray}
-          testFunction(searchResults, res)
-          // res.json(searchResults)
+          res.json(searchResults)
     })
   }
 })
 
-function testFunction(s, res){
-  res.json(s)
-}
 
 function extractDestinationUrl(bingUrl){
   var re = new RegExp('&r=(.*)&');
@@ -146,6 +141,9 @@ function getNumberOfComments(url, res){
       numberOfComments = comments.length
     }
 
+function getNumberOfComments(url){
+
+}
 //add routes file
 app.use('/', userRoutes)
 app.use('/webpages', webpageRoutes)

@@ -14,7 +14,7 @@
     </center>
 </div>
 
-<div class="search_results" id="search_results">
+<div class="search_results" id="search_results" style="list-style: none">
   <ul>
 
   </ul>
@@ -49,9 +49,15 @@
     $.ajax(requestSettings).done(function(rawResults) {
       stopTimer()
       displayResults(rawResults)
-
+      displayNumberOfComments()
     })
   })
+
+
+  function displayNumberOfComments(){
+    
+  }
+
 
   // Helper function to append returned results to the searchResults div
   function displayResults(rawResults){
@@ -59,12 +65,14 @@
     var count = 0
     rawResults.webpages.forEach((result) => {
     var result_uri = result.uri
-    $searchResults.append(`<li>
-                                <span class="search_result" id='${++count}' url="${result.uri}" style="cursor:pointer">${result.name}</span><br>
+    $searchResults.append(`<li class="search_result_li">
+                                <span class="search_result_name" id='${++count}' url="${result.uri}" style="cursor:pointer">${result.name}</span><br>
                                             ${result.snippet}<br>
-                                <span class="search_result" id='${count}' url="${result.uri}">${result.displayUrl}</span>
+                                <span class="search_result_url" id='${count}' url="${result.uri}" style="cursor:pointer">${result.displayUrl}</span>
+
                                 Comments (${result.numberOfComments}) <br>
                             </li>`)
+
    $('#' + count).on("click", function(){
       var requestSettings = {
         method: 'post',
@@ -80,7 +88,8 @@
     })
 
 
-  })}
+  }
+)}
 
 
 
