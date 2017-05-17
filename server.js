@@ -87,7 +87,7 @@ app.post('/search', function(req,res){
   if(searchText && searchText != ""){
     Bing.web(searchText, {
       top: 10
-    }, function(error, response, body){
+    }, function bingResultCallback(error, response, body){
         if (error) console.log(error)
           var webpageArray = []
           var webUrlExtractedFromBing = ""
@@ -95,7 +95,9 @@ app.post('/search', function(req,res){
           for(var i = 0; i < 10; i++){
             if(body.webPages.value[i]){
               webUrlExtractedFromBing = extractDestinationUrl(body.webPages.value[i].url)
+
               numberOfComments = getNumberOfComments(webUrlExtractedFromBing)
+
               webpageArray.push({name: body.webPages.value[i].name,
                               snippet: body.webPages.value[i].snippet,
                               uri: webUrlExtractedFromBing,
@@ -105,11 +107,15 @@ app.post('/search', function(req,res){
               }
           }
           searchResults = {webpages: webpageArray}
-          res.json(searchResults)
+          testFunction(searchResults, res)
+          // res.json(searchResults)
     })
   }
 })
 
+function testFunction(s, res){
+  res.json(s)
+}
 
 function extractDestinationUrl(bingUrl){
   var re = new RegExp('&r=(.*)&');
@@ -118,7 +124,7 @@ function extractDestinationUrl(bingUrl){
   return finalUrl
 }
 
-function getNumberOfComments(url){
+function getNumberOfComments(url, res){
   var newPageID
   // var numberOfComments = 0
   Webpage.find( {url:url} , findPage)
@@ -136,7 +142,7 @@ function getNumberOfComments(url){
 
     function findComments(err,comments) {
       if(err) console.log(err)
-      console.log("Number of comments!!!!", comments.length)
+      console.log("Number of comments: ", comments.length)
       numberOfComments = comments.length
     }
 
