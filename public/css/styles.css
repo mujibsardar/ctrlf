@@ -28,12 +28,25 @@
 #display-comments {
   text-align: left;
 }
-.search_result {
+
+.search_result_name {
+
   font-weight: 400;
   color: #000099;
+  list-style: none;
 }
 
-.search_result:hover {
+.search_result_url {
+  font-weight: 400;
+  color: green;
+  list-style: none;
+}
+
+.search_result_name:hover, .search_result_url:hover {
   text-decoration: underline;
 
+}
+
+.search_result_li {
+  padding-bottom: 20px;
 }
