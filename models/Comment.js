@@ -7,6 +7,7 @@ const
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'
     },
+    userName: String,
     webpage: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Webpage'
