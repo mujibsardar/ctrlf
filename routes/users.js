@@ -16,7 +16,10 @@ userRouter.route('/login')
   }))
 
 userRouter.route('/login-here')
-  .post(passport.authenticate('local-login'))
+  .post(passport.authenticate('local-login'), (req, res) => {
+    res.redirect(req.headers.referer) //might cause an error if invalid email's inserted
+  })
+
 
 //signup path
 userRouter.route('/signup')
