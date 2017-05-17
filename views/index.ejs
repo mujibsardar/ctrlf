@@ -49,14 +49,33 @@
     $.ajax(requestSettings).done(function(rawResults) {
       stopTimer()
       displayResults(rawResults)
-      displayNumberOfComments()
+      displayNumberOfComments(rawResults)
     })
   })
 
 
-  function displayNumberOfComments(){
-    
-  }
+  function displayNumberOfComments(rawResults){
+    // console.log(typeof rawResults.webpages);
+    // $("#comment" + 4).html("Hi")
+    // console.log(rawResults.webpages.length);
+    counter =
+    rawResults.webpages.forEach((result) => {
+    var requestSettings = {
+      method: 'post',
+      url: '/webpages/findComments',
+      data: JSON.stringify({url: result.uri}),
+      contentType:'application/json'
+      }
+
+    $.ajax(requestSettings).done(function(commentsLength) {
+      console.log("callback...!!$$%%");
+      console.log("commentsLength: " , commentsLength)
+         $("#comment" + 4).html("Comment()")
+      })
+
+        // location.href = `webpages/${pageID}`
+      }) // Closes for loop
+    }
 
 
   // Helper function to append returned results to the searchResults div
@@ -70,7 +89,7 @@
                                             ${result.snippet}<br>
                                 <span class="search_result_url" id='${count}' url="${result.uri}" style="cursor:pointer">${result.displayUrl}</span>
 
-                                Comments (${result.numberOfComments}) <br>
+                                <span class="comments" id='comment${count}'> </span><br>
                             </li>`)
 
    $('#' + count).on("click", function(){

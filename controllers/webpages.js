@@ -58,5 +58,30 @@ module.exports = {
     newComment.save((err) => {
       res.json({success: true, message: "new comment created!", comment: newComment})
     })
+  },
+  findbyUrl: (req,res) => {
+    console.log("findbyUrl controller....");
+    var url = req.body.url
+    console.log(url);
+    Webpage.find( {url:url} , findPage)
+
+    function findPage (errs, webpage){
+      console.log("findbyUrl findpage....");
+      if(errs) console.log(errs);
+      if (webpage.length > 0) {
+        newPageID = webpage[0]._id
+        CtrlfComment.find({webpage:newPageID}, findComments)
+      } else {
+        // No website found matching the url given
+        res.json(0)
+        }
+      }
+
+      function findComments(err,comments) {
+        console.log("findbyComments findpage....");
+        if(err) console.log(err)
+        console.log("Controller Number of comments: ", comments.length)
+        res.json(comments.length)
+      }
   }
 }

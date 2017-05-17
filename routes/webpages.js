@@ -21,4 +21,7 @@ webpageRouter.route('/:id/comments')
 webpageRouter.route('/createOrFind')
   .post(webpagesController.createOrFind)
 
+  webpageRouter.route('/findComments')
+    .post(webpagesController.findbyUrl)
+
 module.exports = webpageRouter
