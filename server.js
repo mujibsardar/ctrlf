@@ -89,13 +89,16 @@ app.post('/search', function(req,res){
         if (error) console.log(error)
           var webpageArray = []
           var webUrlExtractedFromBing = ""
+          var numberOfComments = 0
           for(var i = 0; i < 10; i++){
             if(body.webPages.value[i]){
               webUrlExtractedFromBing = extractDestinationUrl(body.webPages.value[i].url)
+              numberOfComments = getNumberOfComments(webUrlExtractedFromBing)
               webpageArray.push({name: body.webPages.value[i].name,
                               snippet: body.webPages.value[i].snippet,
                               uri: webUrlExtractedFromBing,
                               displayUrl: body.webPages.value[i].displayUrl,
+                              numberOfComments,
                               fullObj: body})
               }
           }
@@ -107,17 +110,15 @@ app.post('/search', function(req,res){
 
 
 function extractDestinationUrl(bingUrl){
-  // console.log("Extract...");
-// var regex = new Regex()
-var re = new RegExp('&r=(.*)&');
-// var r  = '&r=https://vine.co/v/Mipm1LMKVqJ/embed&f'.match(re);
-var encodedUrlArray  = bingUrl.match(re);
-var finalUrl = decode(encodedUrlArray[1])
-// console.log("Regex Decoding...");
-// console.log(finalUrl);
-return finalUrl
+  var re = new RegExp('&r=(.*)&');
+  var encodedUrlArray  = bingUrl.match(re);
+  var finalUrl = decode(encodedUrlArray[1])
+  return finalUrl
 }
 
+function getNumberOfComments(url){
+  console.log(webpagesController.commentsIndex)
+}
 //add routes file
 app.use('/', userRoutes)
 app.use('/webpages', webpageRoutes)
