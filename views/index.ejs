@@ -32,7 +32,7 @@
     </h1>
 </div>
 
-<div class="search form" style="width: 60%; margin: 0 auto;">
+<div class="search_form" style="width: 60%; margin: 0 auto;">
     <input type="text" name="" value="" placeholder="Search..."  id="search_text" style="box-shadow: 2px 2px 2px lightgrey; border-radius: 1px;"><br /><br />
     <center>
       <button type="button" name="button" id="search">Search</button>
@@ -61,8 +61,10 @@
       }
   })
 
+
   // Add click event listener to search button
   $searchBtn.on('click', function(){
+
     startRetrievingResultsAnimation()
     var filterText = $searchText.val()
     var requestSettings = {
