@@ -17,6 +17,10 @@ iframe {
   border-style: none
 }
 
+button {
+  color: white;
+}
+
 .appDisplay {
   text-align: center;
   z-index: 100;
