@@ -92,7 +92,8 @@ app.post('/search', function(req,res){
           var webUrlExtractedFromBing = ""
           var numberOfComments = 0
           for(var i = 0; i < 10; i++){
-            if(body.webPages.value[i]){
+            if(body && body.webPages && body.webPages.value && body.webPages.value[i]){
+
               webUrlExtractedFromBing = extractDestinationUrl(body.webPages.value[i].url)
 
               // numberOfComments = getNumberOfComments(webUrlExtractedFromBing)
@@ -103,6 +104,8 @@ app.post('/search', function(req,res){
                               displayUrl: body.webPages.value[i].displayUrl,
                               index: i,
                               fullObj: body})
+              } else {
+                res.redirect('/')
               }
           }
           searchResults = {webpages: webpageArray}
@@ -137,7 +140,6 @@ function getNumberOfComments(url, res){
 
     function findComments(err,comments) {
       if(err) console.log(err)
-      console.log("Number of comments: ", comments.length)
       numberOfComments = comments.length
     }
 
