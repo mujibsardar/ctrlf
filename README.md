@@ -9,7 +9,7 @@
 --
 ###Installation
 
-<!--Update when set-->
+[Ctrl+f Heroku URL](https://arcane-hollows-97544.herokuapp.com/)
 
 --
 ###Wireframe
@@ -20,7 +20,7 @@
 --
 ###Development & Technologies
 
-This application is built using Node.js with express, jQuery/Javascript, AJAX, CSS/Bootstrap, HTML. 3rd party API utility is "Bing".
+This application is built using Node.js with express, mongoDB, jQuery/Javascript, AJAX, CSS/Bootstrap, HTML. 3rd party API utility is "Bing".
 
 <!--Update as we proceed-->
 
