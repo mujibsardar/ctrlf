@@ -12,7 +12,14 @@
 
      <div class="appDisplay" id="appDisplay">
        <span id="close-app-display"><h4>X</h4></span>
-          <h1>Ctrl+F</h1>
+       <h1 style="font-size: 15px">
+           <span style="color: #4285F4; font-size: 32px;">C</span style="color: yellow;">
+           <span style="color: #DB4437; font-size: 32px;">t</span>
+           <span style="color: #F4B400; font-size: 32px;">r</span>
+           <span style="color: #4285F4; font-size: 32px;">l</span>
+           <span style="color: #0F9D58; font-size: 32px;">+</span>
+           <span style="color: #DB4437; font-size: 32px;">F</span>
+       </h1>
 
          <div class="row">
           <div class="col-sm-6">
@@ -25,8 +32,10 @@
                       "<%= c.body %>"
                       <h5 style="margin-top: 0;margin-bottom: 0px;"><%= c.userName %></h5>
 
-                      <% if(String(c.user) == String(currentUser._id)) { %>
+                      <% if ( isLoggedIn ) { %>
+                        <% if ( String(c.user) == String(currentUser._id) ) { %>
                       <p class="delete-comment">Delete</p>
+                        <% } %>
                       <% } %>
                   </li>
                   </div>

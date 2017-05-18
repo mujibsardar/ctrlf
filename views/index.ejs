@@ -1,28 +1,39 @@
-  <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="col-md-12">
-        <div class="">
+  <nav class="navbar navbar-default navbar-fixed-top" style="border: 0px; background-color: rgba(0,0,0,0)">
+
           <% if(isLoggedIn) { %>
-            <p>Logged in as <%= currentUser.local.name %></p>
-            <a href="/profile" class="btn btn-clear">My Profile</a>
-            <a href="/logout" class="btn btn-clear">Logout</a>
+            <div class="dropdown pull-right">
+              <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="border: 0px; background-color: rgba(0,0,0,0)">
+                <span style="font-size: 22px; color: grey;" class="glyphicon glyphicon-th"></span>
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <li><a href="/profile">My Profile</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="/logout">Logout</a></li>
+              </ul>
+            </div>
           <% } %>
           <% if (!isLoggedIn) { %>
-          <a href="/login" class="btn btn-clear">Login</a>
-          <a href="/signup" class="btn btn-clear">Sign Up</a>
+            <a href="/login" class="btn btn-clear" style="margin-top: 5px;">Login</a>
+            <a href="/signup" class="btn btn-clear" style="margin-top: 5px;">Sign Up</a>
           <% } %>
-        </div>
-      </div>
+
   </nav>
 
 <div class="container">
 
-<div class="text-center col-md-8 col-md-offset-2">
-    <h1><span class="fa fa-lock"></span>Ctrl+F</h1>
-    <hr>
+<div class="text-center col-md-8 col-md-offset-2" style="font-size: 0; margin-bottom: 30px; margin-top: 10%">
+    <h1 style="font-size: 25px; font: sans-serif; font-weight: 600">
+        <span style="color: #4285F4; font-size: 68px;">C</span style="color: yellow;">
+        <span style="color: #DB4437; font-size: 68px;">t</span>
+        <span style="color: #F4B400; font-size: 68px;">r</span>
+        <span style="color: #4285F4; font-size: 68px;">l</span>
+        <span style="color: #0F9D58; font-size: 68px;">+</span>
+        <span style="color: #DB4437; font-size: 68px;">F</span>
+    </h1>
 </div>
 
-<div class="search form">
-    <input type="text" name="" value="" placeholder="Search text..."  id="search_text"><br /><br />
+<div class="search form" style="width: 60%; margin: 0 auto;">
+    <input type="text" name="" value="" placeholder="Search..."  id="search_text" style="box-shadow: 2px 2px 2px lightgrey; border-radius: 1px;"><br /><br />
     <center>
       <button type="button" name="button" id="search">Search</button>
     </center>

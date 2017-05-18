@@ -1,6 +1,27 @@
 <!-- /views/profile.ejs -->
-<div class="page-header">
-    <h1>My Profile</h1>
+<nav class="navbar navbar-default navbar-fixed-top" style="border: 0px; background-color: rgba(0,0,0,0)">
+
+        <% if(isLoggedIn) { %>
+          <div class="dropdown pull-right">
+            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="border: 0px; background-color: rgba(0,0,0,0)">
+              <span style="font-size: 22px; color: grey" class="glyphicon glyphicon-th"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+              <li><a href="/profile">My Profile</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="/logout">Logout</a></li>
+            </ul>
+          </div>
+        <% } %>
+        <% if (!isLoggedIn) { %>
+          <a href="/login" class="btn btn-clear" style="margin-top: 5px;">Login</a>
+          <a href="/signup" class="btn btn-clear" style="margin-top: 5px;">Sign Up</a>
+        <% } %>
+
+</nav>
+
+<div class="page-header" style="text-align: center">
+    <h1><%= currentUser.local.name[0].toUpperCase() + currentUser.local.name.slice(1) %>'s Profile</h1>
 </div>
 <div class="row">
     <div class="col-sm-6 col-sm-offset-3">
