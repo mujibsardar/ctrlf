@@ -109,7 +109,11 @@
                                 <span class="search_result_url" id='${count}' url="${result.uri}" style="cursor:pointer">${result.displayUrl}</span>
 
                                 <span class="comments" id='comment${count}'> </span><br>
+                                <span class="helpful_link" id='helpful${count}'>This page was helpful </span><br>
                             </li>`)
+
+
+
 
    $('#' + count++).on("click", function(){
       var requestSettings = {
