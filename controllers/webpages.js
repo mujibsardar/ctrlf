@@ -30,7 +30,6 @@ module.exports = {
   create: (req, res) => {
     Webpage.create(req.body, (err, newlyPage) => {
     if(err) return console.log(err)
-    console.log("New Page Created ", newlyPage);
     res.redirect('/webpages/')
     })
   },
@@ -45,12 +44,24 @@ module.exports = {
       if (webpage.length > 0) {
         newPageID = webpage[0]._id
       } else {
-        Webpage.create({url: req.body.url}, (err, newlyPage) => {
+        Webpage.create({url: req.body.url, helpfulCount: 0}, (err, newlyPage) => {
           newPageID = newlyPage._id
         })
       }
       res.json(newPageID)
     })
+  },
+  increaseHelpfulCount: function(req,res){
+    console.log(req.body.url);
+    Webpage.find({url: req.body.url}, function(err, webpage){
+      if(err) console.log(err);
+      webpage[0].helpfulCount += 1
+      webpage[0].save((err) => {
+        if(err) console.log(err);
+
+      })
+      })
+
   },
   createComments: (req, res) => {
     var newComment = new CtrlfComment(req.body)
@@ -60,13 +71,10 @@ module.exports = {
     })
   },
   findbyUrl: (req,res) => {
-    console.log("findbyUrl controller....");
     var url = req.body.url
-    console.log(url);
     Webpage.find( {url:url} , findPage)
 
     function findPage (errs, webpage){
-      console.log("findbyUrl findpage....");
       if(errs) console.log(errs);
       if (webpage.length > 0) {
         newPageID = webpage[0]._id
@@ -78,9 +86,7 @@ module.exports = {
       }
 
       function findComments(err,comments) {
-        console.log("findbyComments findpage....");
         if(err) console.log(err)
-        console.log("Controller Number of comments: ", comments.length)
         res.json(comments.length)
       }
   }

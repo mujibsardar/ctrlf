@@ -23,4 +23,7 @@ webpageRouter.route('/createOrFind')
 webpageRouter.route('/findComments')
   .post(webpagesController.findbyUrl)
 
+  webpageRouter.route('/increaseHelpfulCount')
+  .patch(webpagesController.increaseHelpfulCount)
+
 module.exports = webpageRouter

@@ -7,7 +7,8 @@ const
   // }),
   // Model of webpage data
   webpageSchema = mongoose.Schema({
-    url: String
+    url: String,
+    helpfulCount: Number
   })
 
 module.exports = mongoose.model('Webpage', webpageSchema)

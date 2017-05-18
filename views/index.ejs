@@ -109,13 +109,27 @@
                                 <span class="search_result_url" id='${count}' url="${result.uri}" style="cursor:pointer">${result.displayUrl}</span>
 
                                 <span class="comments" id='comment${count}'> </span><br>
-                                <span class="helpful_link" id='helpful${count}'>This page was helpful </span><br>
+                                <span class="helpful_link" id='helpful${count}' url="${result.uri}">This page was helpful </span><br>
                             </li>`)
 
 
+   $('#helpful' + count).on("click", function(){
+     var url = $(this).attr("url")
+     console.log(url);
 
+     var requestSettings = {
+       method: 'patch',
+       url: '/webpages/increaseHelpfulCount/',
+       data: JSON.stringify({url: url }),
+       contentType:'application/json',
+      }
 
-   $('#' + count++).on("click", function(){
+     $.ajax(requestSettings).done(function(pageID) {
+          $('#helpful' + count).html("Thanks for letting us know 👍 ")
+      })
+   })
+
+   $('#' + count).on("click", function(){
       var requestSettings = {
         method: 'post',
         url: '/webpages/createOrFind/',
@@ -128,6 +142,7 @@
 
       })
     })
+    count++
   }
 )}
 
