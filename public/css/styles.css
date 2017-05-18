@@ -70,9 +70,9 @@ button {
   z-index: 100000;
   border: 1px solid black;
   border-bottom: 0px;
-  border-top-right-radius: 10px;
-  border-top-left-radius: 10px;
-  background-color: rgba(100,100,100,.85);
+  border-top-right-radius: 50%;
+  border-top-left-radius: 50%;
+  background-color: rgba(255,255,255,.9);
   padding: 0 5px;
   color: white;
   cursor: pointer;

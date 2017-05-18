@@ -53,6 +53,11 @@
   var $searchResults = $('#search_results')
   var $searchResult = $('.search_result')
   var myVar
+  var $searchText = $('#search_text')
+
+  $searchText.on('click', function () {
+    $(this).css('border', '1px solid lightgrey')
+  })
 
   // This checks if used pressed enter on the keyboard. If so it "click" on the search button
   $searchText.keyup(function(event){
