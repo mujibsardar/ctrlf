@@ -149,7 +149,7 @@ function getNumberOfComments(url){
 //add routes file
 app.use('/', userRoutes)
 app.use('/webpages', webpageRoutes)
-app.use('/comments', commentRoutes)
+app.use('/api/comments', commentRoutes)
 
 //server
 app.listen(port, (err) => {
