@@ -79,6 +79,15 @@ button {
   padding: 5px 0;
 }
 
+#delete-comment {
+  color: red;
+  cursor: pointer;
+}
+
+#delete-comment:hover {
+  text-decoration: underline;
+}
+
 .search_result_name {
 
   font-weight: 400;

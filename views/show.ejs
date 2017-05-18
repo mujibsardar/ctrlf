@@ -1,6 +1,5 @@
 
 <h1><%= webpage._id %></h1>
-
 <div class="webpage" style="padding: 0px; margin: 0px;">
 
   <!-- load external page internally -->
@@ -23,11 +22,12 @@
             <ul id="display-comments">
               <% comments.forEach( function(c, i) { %>
                 <% if(i> comments.length - 6) { %>
-                  <div class="comment">
+                  <div class="comment" id="<%= c._id %>">
                     <li style="margin-bottom: 0px;">
                       "<%= c.body %>"
-                      <h5 style="margin-top: 0;margin-bottom: 0px;">-<%= c.userName %></h5>
+                      <h5 style="margin-top: 0;margin-bottom: 0px;"><%= c.userName %></h5>
                     </li>
+                    <p id="delete-comment">Delete</p>
                   </div>
                 <% } %>
               <% }) %>
@@ -88,6 +88,20 @@
   var $emailHere = $('#email-here')
   var $passwordHere = $('#password-here')
   var $toggleAppDisplay = $('#toggle-app-display')
+  var $deleteComment = $('#delete-comment')
+
+$deleteComment.on('click', function () {
+  var comment = $(this).parent().attr('id')
+  var requestSettings = {
+    method: "DELETE",
+    url: "/comments/" + comment
+  }
+  $.ajax(requestSettings).done(function (d) {
+    $('#' + comment).remove();
+  })
+})
+
+
 
   $toggleAppDisplay.on('click', function() {
     $appDisplay.toggle()

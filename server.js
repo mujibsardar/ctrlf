@@ -16,7 +16,8 @@ const
   passportConfig = require('./config/passport.js'),
   userRoutes = require('./routes/users.js'), //users routes
   webpageRoutes = require('./routes/webpages.js'), //webpages routes
-  commentRoutes = require('./routes/comments.js'),
+  commentsRoutes = require('./routes/comments.js'),
+  apiCommentsRoutes = require('./routes/apiComments.js'),
   decode = require('urldecode'), //used to decode regex
   Regex = require('regex'),
   Webpage = require('./models/Webpage.js'), //now that we have the controller file separated, this doesn't need to be required.
@@ -146,10 +147,12 @@ function getNumberOfComments(url, res){
 function getNumberOfComments(url){
 
 }
+
 //add routes file
 app.use('/', userRoutes)
 app.use('/webpages', webpageRoutes)
-app.use('/api/comments', commentRoutes)
+app.use('/api/comments', apiCommentsRoutes)
+app.use('/comments', commentsRoutes)
 
 //server
 app.listen(port, (err) => {

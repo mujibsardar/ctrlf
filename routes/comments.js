@@ -3,17 +3,16 @@ const
   express = require('express'),
   commentsRouter = express.Router(),
   commentsController = require('../controllers/comments.js'),
-  Comment = require('../models/Comment.js'),
-  request = require('request')
+  Comment = require('../models/Comment.js')
 
 
-commentsRouter.get('/', (req, res) => {
-  Comment.find({}, (err, comments) => {
-      if (err) {
-        console.log(err)
-      } else {
-        res.json(comments)
-      }
+commentsRouter.delete('/:id', (req, res) => {
+  Comment.findByIdAndRemove(req.params.id, (err, deletedComment) => {
+    if(err) {
+      res.json({message: "There was a problem...", success: false});
+    } else {
+      res.json({message: "Comment was deleted!", success: true})
+    }
     })
   })
 
