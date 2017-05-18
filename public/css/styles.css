@@ -1,5 +1,7 @@
-
 /* Show page css */
+.container {
+  margin-top: 5%
+}
 .internal {
   width: 100%;
   height: 100%;

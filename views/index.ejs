@@ -1,18 +1,23 @@
+  <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="col-md-12">
+        <div class="">
+          <% if(isLoggedIn) { %>
+            <p>Logged in as <%= currentUser.local.name %></p>
+            <a href="/profile" class="btn btn-clear">My Profile</a>
+            <a href="/logout" class="btn btn-clear">Logout</a>
+          <% } %>
+          <% if (!isLoggedIn) { %>
+          <a href="/login" class="btn btn-clear">Login</a>
+          <a href="/signup" class="btn btn-clear">Sign Up</a>
+          <% } %>
+        </div>
+      </div>
+  </nav>
+
 <div class="container">
-  <div class="col-md-8">
-    <% if(isLoggedIn) { %>
-      <p>Logged in as <%= currentUser.local.name %></p>
-      <a href="/profile" class="btn btn-clear">My Profile</a>
-      <a href="/logout" class="btn btn-clear">Logout</a>
-    <% } %>
-  </div>
 
 <div class="text-center col-md-8 col-md-offset-2">
     <h1><span class="fa fa-lock"></span>Ctrl+F</h1>
-    <% if (!isLoggedIn) { %>
-    <a href="/login" class="btn btn-default">Login</a>
-    <a href="/signup" class="btn btn-default">Signup</a>
-    <% } %>
     <hr>
 </div>
 
