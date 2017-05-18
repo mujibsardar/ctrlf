@@ -165,7 +165,7 @@ function closureFunctionHelpful(countArg){
 //helpful count function
     $.ajax(requestSettings).done(function(exists) {
       if(exists){
-        $('#helpful' + hCount)[0].innerHTML = "&nbsp&nbsp&nbsp Thanks for letting us know 🤝"
+        $('#helpful' + hCount)[0].innerHTML = "&nbsp&nbsp&nbsp Thanks for letting us know!"
         $('#helpful' + hCount).removeAttr("style")
         $('#helpful' + hCount).unbind()
         displayHelpfulCount(rawResults)

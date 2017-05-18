@@ -99,12 +99,12 @@ button {
   padding: 5px 0;
 }
 
-.delete-comment {
+.delete-comment, .edit-comment-button {
   color: red;
   cursor: pointer;
 }
 
-.delete-comment:hover {
+.delete-comment:hover, .edit-comment-button:hover  {
   text-decoration: underline;
 }
 

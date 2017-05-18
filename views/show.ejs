@@ -1,5 +1,3 @@
-
-<h1><%= webpage._id %></h1>
 <div class="webpage" style="padding: 0px; margin: 0px;">
 
   <!-- load external page internally -->
@@ -31,10 +29,14 @@
                 <% if(i > comments.length - 6) { %>
                   <div class="comment" id="<%= c._id %>">
                     <li id="comments-list" style="margin-bottom: 0px;">
-                      "<%= c.body %>"
+                      "<span><%= c.body %></span>"
                       <h5 style="margin-top: 0;margin-bottom: 0px;"><%= c.userName %></h5>
-                      <% if(String(c.user) == String(currentUser._id)) { %>
+
+                      <% if ( isLoggedIn ) { %>
+                        <% if ( String(c.user) == String(currentUser._id) ) { %>
                       <p class="delete-comment">Delete</p>
+                      <p class="edit-comment-button">Edit</p>
+                        <% } %>
                       <% } %>
                   </li>
                   </div>
@@ -99,10 +101,41 @@
   var $toggleAppDisplay = $('#toggle-app-display')
   var $commentsList = $('#comments-list')
   var $deleteComment = $('.delete-comment')
+  var $editComment = $('.edit-comment-button')
   var $authorizeDelete = $('#authorize-delete')
+  var $commentBody = $('#comment-body')
+
+  var $editForm = $('<div>').attr('id', 'edit-form')
+  $editForm.append('<input type="text" class="edit-input">')
+  $editForm.append('<button>Update</button>')
+
+  $displayComments.on('click', 'li p.edit-comment-button', function() {
+    $(this).parent().append($editForm)
+    $('.edit-input').val($(this).prev().prev().prev().text())
+  })
+
+  $displayComments.on('click', 'li #edit-form button', function() {
+    console.log('update button clicked!')
+    var comment = $(this).parent().parent().parent().attr('id')
+
+    var requestSettings = {
+      method: 'PATCH',
+      url: '/comments/' +comment,
+      data: JSON.stringify({ body: $(this).prev().val() }),
+      contentType: 'application/json'
+    }
+    $.ajax(requestSettings).done(function(response) {
+      console.log(response)
+      if(response.success) {
+        $('#' + comment + " span").text(response.comment.body)
+        $editForm.slideUp()
+      }
+    })
+  })
+
+
 
   $displayComments.on('click', 'li p.delete-comment', function() {
-    console.log('Delete clicked!')
     var comment = $(this).parent().parent().attr('id')
 
     var requestSettings = {
@@ -155,12 +188,15 @@
         $.ajax(requestSettings).done(function (c) {
           var theLi = $('<li>')
           var theDelete = $('<p>').addClass('delete-comment')
+          var theEdit = $('<p>').addClass('edit-comment-button')
           var theDiv = $('<div class="comment">')
 
-          theLi.text('"' + c.comment.body + '"')
+          theLi.html('<span>' + c.comment.body + '</span>')
           theLi.append("<h5 style='margin-top: 0;margin-bottom: 0px;'>-" + userName +"</h5>")
+          theEdit.text("Edit")
           theDelete.text("Delete")
           theLi.append(theDelete)
+          theLi.append(theEdit)
           theDiv.attr('id', c.comment._id)
           theDiv.append(theLi)
           $displayComments.append(theDiv)
