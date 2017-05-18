@@ -112,8 +112,8 @@
 
                                 <span class="comments" id='comment${count}'> </span><br>
                             </li>`)
-   count++
-   $('#' + count).on("click", function(){
+
+   $('#' + count++).on("click", function(){
       var requestSettings = {
         method: 'post',
         url: '/webpages/createOrFind/',
