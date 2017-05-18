@@ -21,13 +21,15 @@
             <h3>Comments:</h3>
             <ul id="display-comments">
               <% comments.forEach( function(c, i) { %>
-                <% if(i> comments.length - 6) { %>
+                <% if(i > comments.length - 6) { %>
                   <div class="comment" id="<%= c._id %>">
-                    <li style="margin-bottom: 0px;">
+                    <li id="comments-list" style="margin-bottom: 0px;">
                       "<%= c.body %>"
                       <h5 style="margin-top: 0;margin-bottom: 0px;"><%= c.userName %></h5>
-                    </li>
-                    <p id="delete-comment">Delete</p>
+                      <% if(String(c.user) == String(currentUser._id)) { %>
+                      <p class="delete-comment">Delete</p>
+                      <% } %>
+                  </li>
                   </div>
                 <% } %>
               <% }) %>
@@ -88,19 +90,22 @@
   var $emailHere = $('#email-here')
   var $passwordHere = $('#password-here')
   var $toggleAppDisplay = $('#toggle-app-display')
-  var $deleteComment = $('#delete-comment')
+  var $commentsList = $('#comments-list')
+  var $deleteComment = $('.delete-comment')
+  var $authorizeDelete = $('#authorize-delete')
 
-$deleteComment.on('click', function () {
-  var comment = $(this).parent().attr('id')
-  var requestSettings = {
-    method: "DELETE",
-    url: "/comments/" + comment
-  }
-  $.ajax(requestSettings).done(function (d) {
-    $('#' + comment).remove();
+  $displayComments.on('click', 'li p.delete-comment', function() {
+    console.log('Delete clicked!')
+    var comment = $(this).parent().parent().attr('id')
+
+    var requestSettings = {
+      method: "DELETE",
+      url: "/comments/" + comment
+    }
+    $.ajax(requestSettings).done(function(response) {
+      $('#' + comment).remove()
+    })
   })
-})
-
 
 
   $toggleAppDisplay.on('click', function() {
@@ -142,14 +147,18 @@ $deleteComment.on('click', function () {
 
         $.ajax(requestSettings).done(function (c) {
           var theLi = $('<li>')
+          var theDelete = $('<p>').addClass('delete-comment')
+          var theDiv = $('<div class="comment">')
+
           theLi.text('"' + c.comment.body + '"')
           theLi.append("<h5 style='margin-top: 0;margin-bottom: 0px;'>-" + userName +"</h5>")
-          var theDiv = $('<div class="comment">')
+          theDelete.text("Delete")
+          theLi.append(theDelete)
+          theDiv.attr('id', c.comment._id)
           theDiv.append(theLi)
           $displayComments.append(theDiv)
           $commentBody.val("")
         })
-
 
   })
 
