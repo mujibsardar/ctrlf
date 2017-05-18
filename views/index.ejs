@@ -65,18 +65,38 @@
       stopTimer()
       displayResults(rawResults)
       displayNumberOfComments(rawResults)
+      displayHelpfulCount(rawResults)
     })
   })
 
 
-  function displayNumberOfComments(rawResults){
-    // console.log(typeof rawResults.webpages);
-    // $("#comment" + 4).html("Hi")
-    // console.log(rawResults.webpages.length);
-
+  function displayHelpfulCount(rawResults){
     rawResults.webpages.forEach((result) => {
-    // console.log("URI: ", result.uri)
-    // console.log("Counter: ", counter)
+
+    var requestSettings = {
+      method: 'post',
+      url: '/webpages/findHelpfulCount',
+      data: JSON.stringify({url: result.uri}),
+      contentType:'application/json'
+      }
+
+      closureFunctionComments(result.uri)
+
+    function closureFunctionComments(uri){
+      var url = uri
+      counter = 0
+      $.ajax(requestSettings).done(function(helpfulCount) {
+        counter++
+        $("#helpfulCount" + result.index).html(" " + helpfulCount + " Found this page helpful")
+        })
+    }
+      }) // Closes for loop
+    }
+
+
+  function displayNumberOfComments(rawResults){
+    rawResults.webpages.forEach((result) => {
+
     var requestSettings = {
       method: 'post',
       url: '/webpages/findComments',
@@ -84,10 +104,9 @@
       contentType:'application/json'
       }
 
-      // console.log("URL before ajax call is: ", result.uri);
-      closureFunction(result.uri)
+      closureFunctionComments(result.uri)
 
-    function closureFunction(uri){
+    function closureFunctionComments(uri){
       var url = uri
       counter = 0
       $.ajax(requestSettings).done(function(commentsLength) {
@@ -95,9 +114,6 @@
         $("#comment" + result.index).html("Comments (" + commentsLength + ") ")
         })
     }
-
-
-        // location.href = `webpages/${pageID}`
       }) // Closes for loop
     }
 
@@ -114,25 +130,39 @@
                                 <span class="search_result_url" id='${count}' url="${result.uri}" style="cursor:pointer">${result.displayUrl}</span>
 
                                 <span class="comments" id='comment${count}'> </span><br>
-                                <span class="helpful_link" id='helpful${count}' url="${result.uri}">This page was helpful </span><br>
+                                <span class="helpful_count" id='helpfulCount${count}' url="${result.uri}"></span>
+                                <span class="helpful_link" id='helpful${count}' url="${result.uri}" style="cursor:pointer"> &nbsp&nbsp&nbsp👍 </span><br>
                             </li>`)
 
+closureFunctionHelpful(count)
 
-   $('#helpful' + count).on("click", function(){
-     var url = $(this).attr("url")
-     console.log(url);
+function closureFunctionHelpful(countArg){
+  var hCount = countArg
 
-     var requestSettings = {
-       method: 'patch',
-       url: '/webpages/increaseHelpfulCount/',
-       data: JSON.stringify({url: url }),
-       contentType:'application/json',
+  $('#helpful' + hCount).on("click", function(){
+    var url = $(this).attr("url")
+   //  console.log(url);
+
+    var requestSettings = {
+      method: 'patch',
+      url: '/webpages/increaseHelpfulCount/',
+      data: JSON.stringify({url: url }),
+      contentType:'application/json',
+     }
+
+    $.ajax(requestSettings).done(function(exists) {
+      if(exists){
+        $('#helpful' + hCount)[0].innerHTML = "&nbsp&nbsp&nbsp Thanks for letting us know 🤝"
+        $('#helpful' + hCount).removeAttr("style")
+        $('#helpful' + hCount).unbind()
+        displayHelpfulCount(rawResults)
       }
-
-     $.ajax(requestSettings).done(function(pageID) {
-          $('#helpful' + count).html("Thanks for letting us know 👍 ")
-      })
-   })
+      else {
+        alert("Only visited pages can be marked as helpful")
+      }
+     })
+  })
+}
 
    $('#' + count).on("click", function(){
       var requestSettings = {
