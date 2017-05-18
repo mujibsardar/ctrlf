@@ -144,7 +144,7 @@ function closureFunctionHelpful(countArg){
       data: JSON.stringify({url: url }),
       contentType:'application/json',
      }
-
+//helpful count function
     $.ajax(requestSettings).done(function(exists) {
       if(exists){
         $('#helpful' + hCount)[0].innerHTML = "&nbsp&nbsp&nbsp Thanks for letting us know 🤝"
