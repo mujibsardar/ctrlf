@@ -55,11 +55,16 @@ module.exports = {
     console.log(req.body.url);
     Webpage.find({url: req.body.url}, function(err, webpage){
       if(err) console.log(err);
-      webpage[0].helpfulCount += 1
-      webpage[0].save((err) => {
-        if(err) console.log(err);
-
-      })
+      if(webpage.length > 0){
+        webpage[0].helpfulCount += 1
+        webpage[0].save((err) => {
+          if(err) console.log(err);
+          res.json(true)
+        })
+      }
+      else {
+        res.json(false)
+      }
       })
 
   },
@@ -88,6 +93,21 @@ module.exports = {
       function findComments(err,comments) {
         if(err) console.log(err)
         res.json(comments.length)
+      }
+  },
+  findHelpfulCount: (req,res) => {
+    var url = req.body.url
+    Webpage.find( {url:url} , findPage)
+
+    function findPage (errs, webpage){
+      if(errs) console.log(errs);
+      if (webpage.length > 0) {
+        newPageID = webpage[0]._id
+        res.json(webpage[0].helpfulCount)
+      } else {
+        // No website found matching the url given
+        res.json(0)
+        }
       }
   }
 }
