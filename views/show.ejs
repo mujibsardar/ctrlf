@@ -1,5 +1,3 @@
-
-<h1><%= webpage._id %></h1>
 <div class="webpage" style="padding: 0px; margin: 0px;">
 
   <!-- load external page internally -->
@@ -26,6 +24,7 @@
                     <li id="comments-list" style="margin-bottom: 0px;">
                       "<%= c.body %>"
                       <h5 style="margin-top: 0;margin-bottom: 0px;"><%= c.userName %></h5>
+
                       <% if(String(c.user) == String(currentUser._id)) { %>
                       <p class="delete-comment">Delete</p>
                       <% } %>
