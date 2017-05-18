@@ -13,17 +13,9 @@
 
 <body>
 
-	<div class="container">
-		<div class="col-md-8">
-			<% if(isLoggedIn) { %>
-				<p>Logged in as <%= currentUser.local.name %></p>
-				<a href="/profile" class="btn btn-clear">My Profile</a>
-				<a href="/logout" class="btn btn-clear">Logout</a>
-			<% } %>
-		</div>
+
 		<%- body %>
 
-	</div>
 
 </body>
 </html>

@@ -1,3 +1,12 @@
+<div class="container">
+  <div class="col-md-8">
+    <% if(isLoggedIn) { %>
+      <p>Logged in as <%= currentUser.local.name %></p>
+      <a href="/profile" class="btn btn-clear">My Profile</a>
+      <a href="/logout" class="btn btn-clear">Logout</a>
+    <% } %>
+  </div>
+
 <div class="text-center col-md-8 col-md-offset-2">
     <h1><span class="fa fa-lock"></span>Ctrl+F</h1>
     <% if (!isLoggedIn) { %>
@@ -18,6 +27,7 @@
   <ul>
 
   </ul>
+</div>
 </div>
 
 <script>
@@ -49,14 +59,42 @@
     $.ajax(requestSettings).done(function(rawResults) {
       stopTimer()
       displayResults(rawResults)
-      displayNumberOfComments()
+      displayNumberOfComments(rawResults)
     })
   })
 
 
-  function displayNumberOfComments(){
-    
-  }
+  function displayNumberOfComments(rawResults){
+    // console.log(typeof rawResults.webpages);
+    // $("#comment" + 4).html("Hi")
+    // console.log(rawResults.webpages.length);
+
+    rawResults.webpages.forEach((result) => {
+    // console.log("URI: ", result.uri)
+    // console.log("Counter: ", counter)
+    var requestSettings = {
+      method: 'post',
+      url: '/webpages/findComments',
+      data: JSON.stringify({url: result.uri}),
+      contentType:'application/json'
+      }
+
+      // console.log("URL before ajax call is: ", result.uri);
+      closureFunction(result.uri)
+
+    function closureFunction(uri){
+      var url = uri
+      counter = 0
+      $.ajax(requestSettings).done(function(commentsLength) {
+        counter++
+        $("#comment" + result.index).html("Comments (" + commentsLength + ") ")
+        })
+    }
+
+
+        // location.href = `webpages/${pageID}`
+      }) // Closes for loop
+    }
 
 
   // Helper function to append returned results to the searchResults div
@@ -66,14 +104,14 @@
     rawResults.webpages.forEach((result) => {
     var result_uri = result.uri
     $searchResults.append(`<li class="search_result_li">
-                                <span class="search_result_name" id='${++count}' url="${result.uri}" style="cursor:pointer">${result.name}</span><br>
+                                <span class="search_result_name" id='${count}' url="${result.uri}" style="cursor:pointer">${result.name}</span><br>
                                             ${result.snippet}<br>
                                 <span class="search_result_url" id='${count}' url="${result.uri}" style="cursor:pointer">${result.displayUrl}</span>
 
-                                Comments (${result.numberOfComments}) <br>
+                                <span class="comments" id='comment${count}'> </span><br>
                             </li>`)
 
-   $('#' + count).on("click", function(){
+   $('#' + count++).on("click", function(){
       var requestSettings = {
         method: 'post',
         url: '/webpages/createOrFind/',
@@ -86,11 +124,8 @@
 
       })
     })
-
-
   }
 )}
-
 
 
   // Check if there is some text in the text box when this page is reached
