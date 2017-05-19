@@ -97,8 +97,6 @@ app.post('/search', function(req,res){
 
               webUrlExtractedFromBing = extractDestinationUrl(body.webPages.value[i].url)
 
-              // numberOfComments = getNumberOfComments(webUrlExtractedFromBing)
-
               webpageArray.push({name: body.webPages.value[i].name,
                               snippet: body.webPages.value[i].snippet,
                               uri: webUrlExtractedFromBing,
@@ -106,7 +104,7 @@ app.post('/search', function(req,res){
                               index: i,
                               fullObj: body})
               } else {
-                res.redirect('/')
+                // res.redirect('/')
               }
           }
           searchResults = {webpages: webpageArray}
