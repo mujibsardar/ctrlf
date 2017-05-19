@@ -1,33 +1,30 @@
 #Project 03: Ctrl + F
 ---
-**Ctrl + F** is a search-engine web application that allows searching and linking of the specific page, along with user-generated/structured data (i.e. reviews, comments on the page or the content itself).
+**Ctrl + F** is a web search-engine application that links to the results with user's feedback on the content. 
 
-
-
-<!--Update as we proceed-->
+<!--More prodcut introduction?-->
 
 --
 ###Installation
-
+Following is the link to Ctrl+F:
 [Ctrl+f Heroku URL](https://arcane-hollows-97544.herokuapp.com/)
 
 --
-###Wireframe
-![](images/wireframe.png)
-
-<!--Substitute with our application preview-->
+###Preview
+![](images/home.png)
+![](images/show.png)
 
 --
 ###Development & Technologies
 
-This application is built using Node.js with express, mongoDB, jQuery/Javascript, AJAX, CSS/Bootstrap, HTML. 3rd party API utility is "Bing".
-
-<!--Update as we proceed-->
+This application is built using Node.js with express, mongoDB, jQuery/Javascript, AJAX, CSS/Bootstrap, milligram, HTML. 3rd party API used is "Bing".
 
 --
 ###Project Procedure
-<!--General approach taken-->
-
+- Product Decision: Our team reached a consesus based on anaylizing what users primarily use search engines for. We wanted to develop a search engine where one can both search and add data to the result.
+- Work distribution: After scoping out the project, work was distriubted based on the final merge point, which was the search result render with our application data appended. 
+- Communication: Combination of individual work and paired-programming required our team to communicate frequently and think in parallel to each other.
+- Polish & Publish: With the MVP accomplishment, we added additional features and polished the interface for better user experience.
 
 --
 ###MVP
@@ -47,13 +44,18 @@ Users are able to query/search for the results and also able to view/add comment
 --
 ###Unsovled Problems
 
-<!--Update as we proceed-->
+- Retaining the original webpage's features as users proceed in the application.
+- Speedy search problems
 
 --
 ###Dream Features
-Over Google...
+- Chrome extension/plugin utility
+- Attach comments to a specific part of the webpage
+- Sorting results according to user's reactions
+- Displaying/featuring contents curated by users
+- Complex ctrl+F commands
 
-<!--Update as we proceed-->
+
 
 
 
