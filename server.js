@@ -72,11 +72,18 @@ app.use((req, res, next) => {
 //establish a path to public folder: no route needed because we just need one file
 app.use(express.static(__dirname + '/public'))
 
-
 //root route
 app.get('/', (req,res) => {
 	res.render('index')
 })
+
+
+//add routes file
+app.use('/', userRoutes)
+app.use('/webpages', webpageRoutes)
+app.use('/api/comments', apiCommentsRoutes)
+app.use('/comments', commentsRoutes)
+
 
 //search query route. All searches will route through here
 app.post('/search', function(req,res){
@@ -84,6 +91,8 @@ app.post('/search', function(req,res){
   var searchText = body.text
   var searchResults = {}
 
+  // Make sure there is text to be searched then perform a Bing API call.
+  // Return the top ten results and construct an array of webpage models
   if(searchText && searchText != ""){
     Bing.web(searchText, {
       top: 10
@@ -113,7 +122,7 @@ app.post('/search', function(req,res){
   }
 })
 
-
+// Takes in a raw bing URL and extracts the destination URL by using a decode and regular expressions
 function extractDestinationUrl(bingUrl){
   var re = new RegExp('&r=(.*)&');
   var encodedUrlArray  = bingUrl.match(re);
@@ -121,12 +130,15 @@ function extractDestinationUrl(bingUrl){
   return finalUrl
 }
 
+// Search Webpage collection in the database for the given URL.
+// Use the id of any returned webpage to search comments collection then run findComments callback.
 function getNumberOfComments(url, res){
   var newPageID
   // var numberOfComments = 0
   Webpage.find( {url:url} , findPage)
   }
 
+  // Find page is used as a callback function to find comments associated with a webpage object.
   function findPage (errs, webpage){
     if(errs) console.log(errs);
     if (webpage.length > 0) {
@@ -137,20 +149,13 @@ function getNumberOfComments(url, res){
       }
     }
 
+    // findComments is used as a callback to set the global numberOfComments variable to
+    // the number of comments found for the last query.
     function findComments(err,comments) {
       if(err) console.log(err)
       numberOfComments = comments.length
     }
 
-function getNumberOfComments(url){
-
-}
-
-//add routes file
-app.use('/', userRoutes)
-app.use('/webpages', webpageRoutes)
-app.use('/api/comments', apiCommentsRoutes)
-app.use('/comments', commentsRoutes)
 
 //server
 app.listen(port, (err) => {

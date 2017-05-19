@@ -55,6 +55,7 @@
   var myVar
   var $searchText = $('#search_text')
 
+  // Change border color of search box when they enter the searchbox
   $searchText.on('click', function () {
     $(this).css('border', '1px solid lightgrey')
   })
@@ -69,9 +70,11 @@
 
   // Add click event listener to search button
   $searchBtn.on('click', function(){
-
+    // This initiates the Search.... animation
     startRetrievingResultsAnimation()
+    // Get the search text from the text box
     var filterText = $searchText.val()
+    // Do an ajax call to post search text to /search route
     var requestSettings = {
       method: 'post',
       url: '/search/',
@@ -80,6 +83,7 @@
       }
 
     $.ajax(requestSettings).done(function(rawResults) {
+      // Do the following things when results are returned
       stopTimer()
       displayResults(rawResults)
       displayNumberOfComments(rawResults)
@@ -88,6 +92,7 @@
   })
 
 
+  // Function to display number of people who found page helpful
   function displayHelpfulCount(rawResults){
     rawResults.webpages.forEach((result) => {
 
@@ -100,6 +105,7 @@
 
       closureFunctionComments(result.uri)
 
+
     function closureFunctionComments(uri){
       var url = uri
       counter = 0
@@ -111,7 +117,7 @@
       }) // Closes for loop
     }
 
-
+  // Function to retrieve number of comments for a specific search query result page
   function displayNumberOfComments(rawResults){
     rawResults.webpages.forEach((result) => {
 
