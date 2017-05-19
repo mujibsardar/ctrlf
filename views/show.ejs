@@ -6,24 +6,53 @@
 
    <div class="app" id="app">
 
+     <div class="app-container">
+
+
      <div id="toggle-app-display">
-       <h4>Ctrl+F</h4>
+       <h4 style="font-size: 4px">
+         <span style="color: #4285F4; font-size: 20px;">C</span>
+         <span style="color: #DB4437; font-size: 20px;">t</span>
+         <span style="color: #F4B400; font-size: 20px;">r</span>
+         <span style="color: #4285F4; font-size: 20px;">l</span>
+         <span style="color: #0F9D58; font-size: 20px;">+</span>
+         <span style="color: #DB4437; font-size: 20px;">F</span>
+       </h4>
      </div>
 
      <div class="appDisplay" id="appDisplay">
-       <span id="close-app-display"><h4>X</h4></span>
-       <h1 style="font-size: 15px">
-           <span style="color: #4285F4; font-size: 32px;">C</span style="color: yellow;">
-           <span style="color: #DB4437; font-size: 32px;">t</span>
-           <span style="color: #F4B400; font-size: 32px;">r</span>
-           <span style="color: #4285F4; font-size: 32px;">l</span>
-           <span style="color: #0F9D58; font-size: 32px;">+</span>
-           <span style="color: #DB4437; font-size: 32px;">F</span>
-       </h1>
+       <span id="close-app-display"><h4 class="glyphicon glyphicon-minus"></h4></span>
+       <span>
+         <h1 style="font-size: 15px">
+             <span style="color: #4285F4; font-size: 32px;">C</span style="color: yellow;">
+             <span style="color: #DB4437; font-size: 32px;">t</span>
+             <span style="color: #F4B400; font-size: 32px;">r</span>
+             <span style="color: #4285F4; font-size: 32px;">l</span>
+             <span style="color: #0F9D58; font-size: 32px;">+</span>
+             <span style="color: #DB4437; font-size: 32px;">F</span>
+             <span>
+               <div class="dropdown pull-right">
+                 <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="border: 0px; background-color: rgba(0,0,0,0); padding-top: 0;">
+                   <span style="font-size: 22px; color: grey;" class="glyphicon glyphicon-th"></span>
+                 </button>
+                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                   <li><a href="/profile">My Profile</a></li>
+                   <li role="separator" class="divider"></li>
+                   <li><a href="/logout-here">Logout</a></li>
+                 </ul>
+               </div>
+             </span>
+         </h1>
+
+       </span>
+
 
          <div class="row">
-          <div class="col-sm-6">
-            <h3>Comments:</h3>
+           <div class="col-sm-1">
+
+           </div>
+          <div class="col-sm-5">
+            <h4>Comments</h4>
             <ul id="display-comments">
               <% comments.forEach( function(c, i) { %>
                 <% if(i > comments.length - 6) { %>
@@ -34,8 +63,8 @@
 
                       <% if ( isLoggedIn ) { %>
                         <% if ( String(c.user) == String(currentUser._id) ) { %>
-                      <p class="delete-comment">Delete</p>
-                      <p class="edit-comment-button">Edit</p>
+                      <p class="delete-comment deleteEdit glyphicon glyphicon-trash"></p>
+                      <p class="edit-comment-button deleteEdit glyphicon glyphicon-pencil"></p>
                         <% } %>
                       <% } %>
                   </li>
@@ -44,14 +73,15 @@
               <% }) %>
             </ul>
           </div>
+          <div class="col-sm-1">
 
+          </div>
 
-           <div class="col-sm-6" style="padding-right: 20px;">
+           <div class="col-sm-4" style="padding-right: 20px;">
 
               <% if(isLoggedIn) { %>
-                <a href="/logout-here" class="btn btn-clear">Logout</a>
                  <div>
-                    <h3>Add Comment:</h3>
+                    <h4>Add Comment</h4>
                      <input type="text" id="comment-body"><br/>
                      <button type="button" userName="<%= currentUser.local.name %>" userId="<%= currentUser._id %>" pageId="<%= webpage._id %>" id="comment-submit" style="margin-top: 10px;">Submit</button>
                  </div>
@@ -80,9 +110,13 @@
 
 
             </div>
+            <div class="col-sm-1">
+
+            </div>
           </div>
         </div>
-    </div>
+      </div>
+  </div>
 
 </div>
 
@@ -107,7 +141,7 @@
 
   var $editForm = $('<div>').attr('id', 'edit-form')
   $editForm.append('<input type="text" class="edit-input">')
-  $editForm.append('<button>Update</button>')
+  $editForm.append('<button class="update-button">Update</button>')
 
   $displayComments.on('click', 'li p.edit-comment-button', function() {
     $(this).parent().append($editForm)
@@ -174,34 +208,33 @@
 
 
   $commentSubmit.on('click', function () {
+
     var pageId = $(this).attr('pageId');
     var userId = $(this).attr('userId');
     var userName = $(this).attr('username');
 
-        var requestSettings = {
-          method: "POST",
-          url: "/webpages/"+ pageId +"/comments",
-          data: JSON.stringify({body: $commentBody.val(), user: userId, userName: userName}),
-          contentType: "application/json"
-        }
+    var requestSettings = {
+      method: "POST",
+      url: "/webpages/"+ pageId +"/comments",
+      data: JSON.stringify({body: $commentBody.val(), user: userId, userName: userName}),
+      contentType: "application/json"
+    }
 
-        $.ajax(requestSettings).done(function (c) {
-          var theLi = $('<li>')
-          var theDelete = $('<p>').addClass('delete-comment')
-          var theEdit = $('<p>').addClass('edit-comment-button')
-          var theDiv = $('<div class="comment">')
+    $.ajax(requestSettings).done(function (c) {
+      var theLi = $('<li>')
+      var theDelete = $('<p>').addClass('delete-comment deleteEdit glyphicon glyphicon-trash')
+      var theEdit = $('<p>').addClass('edit-comment-button deleteEdit glyphicon glyphicon-pencil')
+      var theDiv = $('<div class="comment">')
 
-          theLi.html('<span>' + c.comment.body + '</span>')
-          theLi.append("<h5 style='margin-top: 0;margin-bottom: 0px;'>-" + userName +"</h5>")
-          theEdit.text("Edit")
-          theDelete.text("Delete")
-          theLi.append(theDelete)
-          theLi.append(theEdit)
-          theDiv.attr('id', c.comment._id)
-          theDiv.append(theLi)
-          $displayComments.append(theDiv)
-          $commentBody.val("")
-        })
+      theLi.html('<span>' + c.comment.body + '</span>')
+      theLi.append("<h5 style='margin-top: 0;margin-bottom: 0px;'>-" + userName +"</h5>")
+      theLi.append(theDelete)
+      theLi.append(theEdit)
+      theDiv.attr('id', c.comment._id)
+      theDiv.append(theLi)
+      $displayComments.append(theDiv)
+      $commentBody.val("")
+    })
 
   })
 
