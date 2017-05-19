@@ -26,16 +26,26 @@ button {
 .dropdown {
   text-align: left;
   margin-left: 10px;
-  margin-top: 5px;
 }
 
-#search {
+#search, .update-button {
   border: 0px;
   background-color: #F1F1F1;
   color: black;
   border-radius: 1px;
 }
-
+.update-button {
+  border-radius: 5px;
+  font-size: 12px;
+  margin-top: 4.5px;
+  height: 25px;
+  width: 50px;
+  padding-left: 3.5px;
+}
+#edit-form {
+  width: 80%;
+  margin: 0 auto;
+}
 #comment-submit {
   border: 1px solid black;
   background-color: #F1F1F1;
@@ -68,11 +78,11 @@ button {
   left: 50%;
   margin: 0 auto;
   z-index: 100000;
-  border: 1px solid black;
+  border: 1px solid grey;
   border-bottom: 0px;
-  border-top-right-radius: 10px;
-  border-top-left-radius: 10px;
-  background-color: rgba(100,100,100,.85);
+  border-top-right-radius: 50%;
+  border-top-left-radius: 50%;
+  background-color: rgba(255,255,255,.9);
   padding: 0 5px;
   color: white;
   cursor: pointer;
@@ -90,22 +100,28 @@ button {
   padding-left: 20px;
 }
 
+.deleteEdit {
+  display: inline;
+  font-size: 12px;
+  padding: .3%;
+}
+
 .comment {
-  border: 1px solid black;
+  border: .5px solid black;
   border-radius: 10px;
-  background-color: rgba(230,230,230, .85);
-  box-shadow: 3px 3px 3px;
+  background-color: rgba(250,250,250, .85);
+  box-shadow: 3px 3px 3px lightgrey;
   margin: 5px;
   padding: 5px 0;
 }
 
 .delete-comment, .edit-comment-button {
-  color: red;
+  color: grey;
   cursor: pointer;
 }
 
 .delete-comment:hover, .edit-comment-button:hover  {
-  text-decoration: underline;
+  color: darkgrey;
 }
 
 .search_result_name {
