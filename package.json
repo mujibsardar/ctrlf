@@ -27,6 +27,7 @@
     "passport-local": "^1.0.0",
     "regex": "^0.1.1",
     "request": "^2.81.0",
-    "urldecode": "^1.0.1"
+    "urldecode": "^1.0.1",
+    "node-bing-api": "^4.1.1"
   }
 }
